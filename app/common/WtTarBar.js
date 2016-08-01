@@ -1,15 +1,24 @@
 /**
  * Created by yk on 2016/8/1.
  */
+import React, {Component} from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableWithoutFeedback,
+    Animated,
+    Dimensions,
+} from 'react-native';
 
-class WtTarBar extends Component {
+export default class WtTarBar extends Component {
     static propTypes = {
         ...View.protoTypes,
 
         initOpacity: React.PropTypes.number,
         activeTab: React.PropTypes.number,
-        tabs: React.PropTypes.array.isRequired,
-        goToPage: React.PropTypes.func.isRequired,
+        tabs: React.PropTypes.array,
+        goToPage: React.PropTypes.func,
         underlineColor: React.PropTypes.string.isRequired,
         underlineHeight: React.PropTypes.number.isRequired,
     }
@@ -17,21 +26,27 @@ class WtTarBar extends Component {
     constructor(props) {
         super(props)
 
-        this.initOpacity = props.initOpacity || 0.7
+        this.initOpacity = props.initOpacity || 0.5
         this.itemList = props.tabs
 
 
         this._scrollValueRange = this._initScrollValueRange(this.itemList.length)
         this._itemX =new Array(this.itemList.length)
         this._itemWidth = new Array(this.itemList.length)
-
-        this._TouchAnimated = Animated.createAnimatedComponent(TouchableWithoutFeedback) //TODO how?
-        this.state = {underLineAniStyle: null}
+        this._activeRef = null
+        this._layoutCount = 0
     }
 
-    componentDidMount() {
-        //TODO ?
-        console.warn(this._itemX)
+    shouldComponentUpdate() {
+        return false
+    }
+
+    /*componentDidMount() {
+        this._activeRef.setValue(0)// remove border
+    }*/
+
+
+    render() {
         const left = this.props.scrollValue.interpolate({
             inputRange: this._scrollValueRange,
             outputRange: this._itemX,
@@ -40,32 +55,27 @@ class WtTarBar extends Component {
             inputRange: this._scrollValueRange,
             outputRange: this._itemWidth,
         })
-        this.setState({
-            underLineAniStyle: {
-                left,
-                width,
-                opacity:1,
-            }
-        })
-    }
-
-    render() {
         const underLineStyle = {
             position: 'absolute',
-            buttom:0,
             height:this.props.underlineHeight,
             backgroundColor: this.props.underlineColor,
-            opacity:0,
-            width:1,
+            bottom:0,
+            left,
+            width,
         }
 
         return (
-            <View style={[styles.tarBar, this.props.style]}>
+            <View style={[styles.tarBar, this.props.style]}
+
+            >
                 {this.itemList.map((item, index) => {
                     return this._tarBarItem(index, item)
                 })}
 
-                <Animated.View style={[underLineStyle, this.state.underLineAniStyle]}/>
+                <Animated.View
+                    style={underLineStyle}
+                    ref={comp => this._underLine = comp}
+                />
             </View>
         )
     }
@@ -75,17 +85,28 @@ class WtTarBar extends Component {
             inputRange:this._scrollValueRange,
             outputRange: this._getOutputRange(this.itemList.length, index, this.initOpacity),
         })
-        const Comp = this._TouchAnimated
+
+        /*// 处理 underline 可能出现的闪动
+        let  borderHeight
+        if (index == this.props.activeTab) {
+            this._activeRef = new Animated.Value(this.props.underlineHeight)
+            borderHeight = this._activeRef
+        } else {
+            borderHeight = new Animated.Value(0)
+        }*/
+
         return  (
-            <Comp
-                style={{
-                opacity: opa
-                }}
-                onPress={() => this.props.goToPage(index)}
+            <TouchableWithoutFeedback
+                key={title}
                 onLayout={(event) => this._onLayout(event, index)}
             >
+               <Animated.View
+                   style={[styles.tarBarItem, {opacity:opa, borderBottomColor: this.props.underlineColor, borderBottomWidth:borderHeight},]}
+                   onPress={() => this.props.goToPage(index)}
+               >
                 <Text>{title}</Text>
-            </Comp>
+               </Animated.View>
+            </TouchableWithoutFeedback>
         )
     }
 
@@ -123,9 +144,17 @@ class WtTarBar extends Component {
 
 
     _onLayout(event, index) {
+        this._layoutCount ++
+
         const layout = event.nativeEvent.layout
         this._itemX[index] = layout.x
         this._itemWidth[index] = layout.width
+
+        if (this._layoutCount == this.itemList.length) {
+            //触发动画value的计算. 因为开始render的时候 _itemX  _itemWidth 可能还没有init
+            this._activeRef.setValue(0)// remove border
+            this.props.scrollValue.setValue(this.props.activeTab)
+        }
     }
 
 }
@@ -134,5 +163,11 @@ const styles = StyleSheet.create({
     tarBar: {
         flexDirection:'row',
         justifyContent:'space-around',
+        height:30,
+    },
+    tarBarItem : {
+        justifyContent:'center',
     }
+
+
 })
