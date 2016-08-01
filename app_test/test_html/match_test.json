@@ -1,0 +1,223 @@
+{
+
+  "code": 0,
+  "message": "",
+  "data": {
+    "players": [
+      {
+        "accountId": 111189717,
+        "heroId": 102,
+        "items": [
+          0,
+          36,
+          81,
+          46,
+          50,
+          185
+        ],
+        "kills": 1,
+        "deaths": 4,
+        "assists": 0,
+        "denies": 10,
+        "goldPerMin": 349,
+        "xpPerMin": 338,
+        "level": 12,
+        "gold": 1306,
+        "persona": "Inflame"
+      },
+      {
+        "accountId": 131237305,
+        "heroId": 53,
+        "items": [
+          50,
+          185,
+          79,
+          36,
+          67,
+          46
+        ],
+        "kills": 0,
+        "deaths": 2,
+        "assists": 4,
+        "denies": 5,
+        "goldPerMin": 316,
+        "xpPerMin": 276,
+        "level": 11,
+        "gold": 642,
+        "persona": "Xz"
+      },
+      {
+        "accountId": 177416702,
+        "heroId": 93,
+        "items": [
+          215,
+          36,
+          63,
+          46,
+          24,
+          252
+        ],
+        "kills": 2,
+        "deaths": 4,
+        "assists": 1,
+        "denies": 10,
+        "goldPerMin": 407,
+        "xpPerMin": 378,
+        "level": 13,
+        "gold": 1062,
+        "persona": "Ame"
+      },
+      {
+        "accountId": 107081378,
+        "heroId": 58,
+        "items": [
+          63,
+          92,
+          188,
+          0,
+          40,
+          36
+        ],
+        "kills": 0,
+        "deaths": 3,
+        "assists": 3,
+        "denies": 0,
+        "goldPerMin": 191,
+        "xpPerMin": 163,
+        "level": 8,
+        "gold": 189,
+        "persona": "Victoria"
+      },
+      {
+        "accountId": 131043881,
+        "heroId": 50,
+        "items": [
+          0,
+          36,
+          180,
+          42,
+          188,
+          40
+        ],
+        "kills": 1,
+        "deaths": 2,
+        "assists": 2,
+        "denies": 4,
+        "goldPerMin": 193,
+        "xpPerMin": 183,
+        "level": 9,
+        "gold": 106,
+        "persona": "Demons"
+      },
+      {
+        "accountId": 139876032,
+        "heroId": 62,
+        "items": [
+          1,
+          11,
+          0,
+          0,
+          46,
+          180
+        ],
+        "kills": 2,
+        "deaths": 3,
+        "assists": 10,
+        "denies": 0,
+        "goldPerMin": 282,
+        "xpPerMin": 214,
+        "level": 10,
+        "gold": 1159,
+        "persona": "kaka"
+      },
+      {
+        "accountId": 88508515,
+        "heroId": 63,
+        "items": [
+          46,
+          63,
+          30,
+          212,
+          123,
+          137
+        ],
+        "kills": 4,
+        "deaths": 0,
+        "assists": 9,
+        "denies": 13,
+        "goldPerMin": 641,
+        "xpPerMin": 661,
+        "level": 18,
+        "gold": 4025,
+        "persona": "Hao"
+      },
+      {
+        "accountId": 87012746,
+        "heroId": 55,
+        "items": [
+          11,
+          231,
+          65,
+          1,
+          46,
+          178
+        ],
+        "kills": 0,
+        "deaths": 1,
+        "assists": 11,
+        "denies": 3,
+        "goldPerMin": 507,
+        "xpPerMin": 432,
+        "level": 14,
+        "gold": 2183,
+        "persona": "kpii"
+      },
+      {
+        "accountId": 88553213,
+        "heroId": 26,
+        "items": [
+          1,
+          214,
+          36,
+          37,
+          0,
+          0
+        ],
+        "kills": 4,
+        "deaths": 0,
+        "assists": 6,
+        "denies": 5,
+        "goldPerMin": 294,
+        "xpPerMin": 271,
+        "level": 11,
+        "gold": 187,
+        "persona": "ChuaN"
+      },
+      {
+        "accountId": 89157606,
+        "heroId": 49,
+        "items": [
+          249,
+          11,
+          63,
+          154,
+          41,
+          46
+        ],
+        "kills": 5,
+        "deaths": 0,
+        "assists": 5,
+        "denies": 11,
+        "goldPerMin": 524,
+        "xpPerMin": 467,
+        "level": 15,
+        "gold": 2454,
+        "persona": "Mu"
+      }
+    ],
+    "radiantWin": false,
+    "duration": 1548,
+    "matchId": 2343186672
+  }
+
+}
