@@ -45,3 +45,7 @@ exports.getLeagueMatches = (optOrLeague, cb) => {
             cb(error)
         })
 }
+
+exports.getLeagueList = (type, maxId, minId, cb) => {
+
+}

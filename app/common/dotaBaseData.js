@@ -22,7 +22,7 @@ exports.getItemData = (id) => {
 }
 
 
-/*const heroData = {
+const heroData = {
     "1": {
         "id": 1,
         "name": "敌法师",
@@ -1841,7 +1841,7 @@ const itemData = {
         "name": "凝魂之泪",
         "icon": require('../images/item/item_265.png')
     }
-}*/
+}
 
 
 
