@@ -13,58 +13,117 @@ import {
     Image,
     Dimensions,
 } from 'react-native';
+
+import Orientation from 'react-native-orientation'
+
+import MatchDetail from './MatchDetail'
+
 import commonStyles from '../common/commonStyle'
 
 export default class MatchBrief extends Component {
+    componentDidMount() {
+        Orientation.unlockAllOrientations()
+    }
 
     render() {
-        return (
-            <View style={styles.detail}>
-                <View style={commonStyles.flexRow}>
-                    <Text style={commonStyles.fs12Flex2}>比赛ID: {this.props.index}</Text>
-                    <Text style={commonStyles.fs12Flex1}>开始: 23:12</Text>
-                    <Text style={commonStyles.fs12Flex1}>类型: BO5</Text>
-                </View>
+        const {matchId, startTime, title, radiantTeam, direTeam} = this.props.matchInfo
+        const start = new Date(startTime)
 
-                <View style={styles.team}>
-                    <View style={commonStyles.flexRow}>
-                        <Text style={styles.teamNameRed}>LGD:</Text>
-                        <View style={styles.heroIcon}>
-                            <Image source={require("../image/hero/1.png")}/>
-                            <Image source={require("../image/hero/2.png")}/>
-                            <Image source={require("../image/hero/3.png")}/>
-                            <Image source={require("../image/hero/4.png")}/>
-                            <Image source={require("../image/hero/5.png")}/>
-                        </View>
+        return (
+            <TouchableHighlight
+                style={styles.root}
+                underlayColor="#888888"
+                onPress={this._handlePress.bind(this)}>
+                <View style={styles.detail}>
+                    <Text style={commonStyles.fs13Flex1}>比赛ID: {matchId}</Text>
+
+                    <View style={styles.briefText}>
+                        <Text numberOfLines={1} style={commonStyles.fs12Flex1}>{radiantTeam + " 对阵 " + direTeam}</Text>
+                        <Text style={commonStyles.fs12Flex1}>开始: {start.getHours() + ':' + start.getMinutes()}</Text>
+                        <Text style={commonStyles.fs12Flex1}>类型: {title}</Text>
                     </View>
-                    <View style={commonStyles.flexRow}>
-                        <Text style={styles.teamNameBlue}>EHOME:</Text>
+
+                    <View style={styles.heroAll}>
+
                         <View style={styles.heroIcon}>
-                            <Image source={require("../image/hero/6.png")}/>
-                            <Image source={require("../image/hero/7.png")}/>
-                            <Image source={require("../image/hero/8.png")}/>
-                            <Image source={require("../image/hero/9.png")}/>
-                            <Image source={require("../image/hero/10.png")}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+
                         </View>
+
+                        <Text style={styles.vs}>VS</Text>
+
+                        <View style={styles.heroIcon}>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                            <Image style={styles.icon}
+                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                        </View>
+
                     </View>
                 </View>
-            </View>
+            </TouchableHighlight>
         )
+    }
+
+    _handlePress() {
+        this.props.navigator.push({
+            component: MatchDetail,
+        })
     }
 }
 
 const styles = StyleSheet.create({
-    detail: {
-        backgroundColor: '#f0f0f0',
-        paddingLeft:20,
-        paddingRight:20,
-        paddingTop:10,
-        paddingBottom:10,
+    root:{
+        overflow: 'hidden',
         marginTop:5,
-        overflow:'hidden',
     },
-    team: {paddingTop: 5},
-    teamNameRed: {fontSize: 12, fontStyle: 'italic', flex: 2, color: 'red'},
-    teamNameBlue: {fontSize: 12, fontStyle: 'italic', flex: 2, color: 'blue'},
-    heroIcon: {flexDirection: 'row', flex: 3, alignItems:'center', justifyContent:'center',}
+    detail: {
+        backgroundColor: '#e0e0e0',
+        paddingTop: 10,
+        paddingBottom: 10,
+        overflow: 'hidden',
+    },
+
+    briefText: {
+        flexDirection: 'row',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+
+    vs: {
+        marginLeft: 10,
+        marginRight: 10,
+    },
+
+    heroAll: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    heroIcon: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    icon: {
+        width: 22,
+        height: 66,
+    }
 })

@@ -17,21 +17,30 @@ import {
 
 import Orientation from 'react-native-orientation'
 
-import League from './League'
+import LeagueBrief from './LeagueBrief'
 import LeagueInfo from './LeagueInfo'
+
+import dotaBaseData from '../common/dotaBaseData'
+import commonComponent from '../common/commonComponent'
 
 export default class LeagueList extends Component {
     constructor(props) {
         super(props)
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id})
-        this.state = {leagueList: this.ds.cloneWithRows(props.initLeagueList)}
+        this.state = {leagueList: this.ds.cloneWithRows([])}
     }
 
     componentDidMount() {
-       // Orientation.lockToPortrait()
+        this.setState({
+            leagueList: this.state.leagueList.cloneWithRows(dotaBaseData.getLeagueList(this.props.type))
+        })
     }
 
     render() {
+        if (this.state.leagueList.getRowCount() == 0) {
+            return commonComponent.loadData()
+        }
+
         return (
             <ListView
                 initialListSize={10}
@@ -42,7 +51,7 @@ export default class LeagueList extends Component {
                                 onPress={() => this._renderLeagueDetail(league)}
                                 style={styles.lineRoot}
                     >
-                        <League league={league} withName={true}/>
+                        <LeagueBrief league={league} withName={true} style={styles.leagueBack}/>
                     </TouchableHighlight>
                     )}
                 showsVerticalScrollIndicator={true}
@@ -59,9 +68,13 @@ export default class LeagueList extends Component {
 const styles = StyleSheet.create({
     lineRoot: {
         marginTop: 5,
-        overflow:'hidden', //  配合   removeClippedSubviews
+        overflow: 'hidden', //  配合   removeClippedSubviews
     },
-    content:{
-        overflow:'hidden',
-    }
+    content: {
+        overflow: 'hidden',
+    },
+    leagueBack: {
+        backgroundColor: '#e0e0e0',
+    },
+
 })

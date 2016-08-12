@@ -16,7 +16,6 @@ import LeagueNavigator from './league/LeagueNavigator'
 import Search from './Search'
 import TeamRanking from './TeamRanking'
 
-const Item = TabBarIOS.Item
 
 export default class IndexView extends Component {
     constructor() {
@@ -71,9 +70,3 @@ export default class IndexView extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-
-})

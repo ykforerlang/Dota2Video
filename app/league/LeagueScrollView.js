@@ -16,13 +16,11 @@ import Orientation from 'react-native-orientation'
 import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view';
 
 import LeagueList from './LeagueList';
-import LeagueTypeBar from './LeagueTypeBar'
 import WtTarBar from '../common/WtTarBar'
 
-import leagueListData from '../base_data/leagueBriefs.json'
 
 const LeagueType = [{
-    tabLabel: "高端组",
+    tabLabel: "高端眼看组",
     leagueType: "premium",
 }, {
     tabLabel: "职业组",
@@ -38,22 +36,17 @@ export  default class LeagueScrollView extends Component {
         super()
     }
 
-    componentDidMount() {
-       //Orientation.lockToPortrait()
-    }
-
-
     render() {
         return (
             <ScrollableTabView
                 style={styles.tabView}
                 tabBarInactiveTextColor="gray"
                 tabBarActiveTextColor="black"
-                renderTabBar={() => <WtTarBar underlineColor="blue" underlineHeight={4}/>}
+                renderTabBar={() => <WtTarBar underlineColor="grey" underlineHeight={3}/>}
             >
 
                 {LeagueType.map((value, index) =>
-                    <LeagueList initLeagueList={leagueListData[value.leagueType]}
+                    <LeagueList type={value.leagueType}
                                 navigator={this.props.navigator}
                                 tabLabel={value.tabLabel}
                                 key={index}/>
@@ -70,3 +63,4 @@ const styles = StyleSheet.create({
     },
 
 })
+

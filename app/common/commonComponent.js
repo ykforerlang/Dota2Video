@@ -8,25 +8,20 @@ import {
     View,
     Platform,
     TouchableHighlight,
-    ActivityIndicatorIOS,
+    ActivityIndicator,
     Dimensions,
 } from 'react-native';
 
 export default class CommonComponent {
 
     static loadData(style, size) {
-        if (Platform.OS === 'ios'){
-            return (<ActivityIndicatorIOS
-                animating={true}
-                style={[styles.loadData, style]}
-                size= {size || 'large'}
-            />)
-        } else {
-            //TODO
-        }
+        return (<ActivityIndicator
+            animating={true}
+            style={[styles.loadData, style]}
+            size={size || 'large'}
+        />)
     }
 
-    static LoadData
 }
 
 const styles = StyleSheet.create({
@@ -34,7 +29,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems:'center',
+        alignItems: 'center',
     },
 
 })

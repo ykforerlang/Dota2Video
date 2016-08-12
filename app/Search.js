@@ -17,16 +17,29 @@ import {
     Text,
 } from 'react-native';
 
-import Series from './league/Series'
-
 export default class Search extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            foo: false
+        }
 
     }
+
+    componentDidMount() {
+        //TODO ?
+        this.setState({
+            foo: true
+        })
+
+    }
+
     render() {
+        console.warn("hi....")
         return (
-            <Series/>
+            <View style={{flex:1}}>
+                {this.state.foo ? <Text> hi</Text> : <Text>hi2</Text>}
+            </View>
         )
     }
 

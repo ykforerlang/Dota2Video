@@ -33,17 +33,12 @@ export default class WtTarBar extends Component {
         this._scrollValueRange = this._initScrollValueRange(this.itemList.length)
         this._itemX =new Array(this.itemList.length)
         this._itemWidth = new Array(this.itemList.length)
-        this._activeRef = null
         this._layoutCount = 0
     }
 
     shouldComponentUpdate() {
         return false
     }
-
-    /*componentDidMount() {
-        this._activeRef.setValue(0)// remove border
-    }*/
 
 
     render() {
@@ -74,7 +69,6 @@ export default class WtTarBar extends Component {
 
                 <Animated.View
                     style={underLineStyle}
-                    ref={comp => this._underLine = comp}
                 />
             </View>
         )
@@ -86,23 +80,14 @@ export default class WtTarBar extends Component {
             outputRange: this._getOutputRange(this.itemList.length, index, this.initOpacity),
         })
 
-        /*// 处理 underline 可能出现的闪动
-        let  borderHeight
-        if (index == this.props.activeTab) {
-            this._activeRef = new Animated.Value(this.props.underlineHeight)
-            borderHeight = this._activeRef
-        } else {
-            borderHeight = new Animated.Value(0)
-        }*/
-
         return  (
             <TouchableWithoutFeedback
                 key={title}
                 onLayout={(event) => this._onLayout(event, index)}
+                onPress={() => this.props.goToPage(index)}
             >
                <Animated.View
-                   style={[styles.tarBarItem, {opacity:opa, borderBottomColor: this.props.underlineColor, borderBottomWidth:borderHeight},]}
-                   onPress={() => this.props.goToPage(index)}
+                   style={[styles.tarBarItem, {opacity:opa},]}
                >
                 <Text>{title}</Text>
                </Animated.View>
@@ -152,7 +137,6 @@ export default class WtTarBar extends Component {
 
         if (this._layoutCount == this.itemList.length) {
             //触发动画value的计算. 因为开始render的时候 _itemX  _itemWidth 可能还没有init
-            this._activeRef.setValue(0)// remove border
             this.props.scrollValue.setValue(this.props.activeTab)
         }
     }
