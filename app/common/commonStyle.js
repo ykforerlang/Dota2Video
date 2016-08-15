@@ -8,6 +8,7 @@ const commonStyles = StyleSheet.create({
     flex:{flex:1},
     flexRow: {flexDirection: 'row'},
     flexRowJL: {flexDirection:'row', justifyContent:'flex-end'},
+    flexRowJCenter: {flexDirection:'row', justifyContent:'center'},
     flexRowFlex: {flexDirection: 'row', flex:1},
     fs12: {fontSize: 12,},
     fs13: {fontSize: 13,},

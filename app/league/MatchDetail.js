@@ -25,11 +25,11 @@ export default class MatchDetail extends React.Component {
         return (
             <ScrollView>
                 {this._title()}
-                <Text style={{fontSize:15, fontWeight:'500',backgroundColor:'#e5e5DC', padding:10}}>天辉</Text>
+                <Text style={styles.campName}>天辉</Text>
                 {[1, 2, 3, 4, 5].map((ele, index) => {
                     return this._renderRow(ele, index)
                 })}
-                <Text style={{fontSize:15, fontWeight:'500',backgroundColor:'#e5e5DC', padding:10}}>夜魇</Text>
+                <Text style={styles.campName}>夜魇</Text>
                 {[1, 2, 3, 4, 5].map((ele, index) => {
                     return this._renderRow(ele, index)
                 })}
@@ -49,15 +49,16 @@ export default class MatchDetail extends React.Component {
                     <Text style={commonStyles.fs14Flex1L}>人头: 33/40</Text>
                     <Text style={commonStyles.fs14Flex1L}>天辉:LGD/夜魇:EHOME</Text>
                 </View>
-                <View style={commonStyles.flexRowJL}>
-                    <Button onPress={()=>{}} value="观看视频" textFontSize={12} style={{backgroundColor:'#a0a0a0', marginRight:20}} underlayColor="#808080"/>
-                    <Button onPress={()=>{}} value="观看录像" textFontSize={12} style={{backgroundColor:'#a0a0a0', marginRight:20}} underlayColor="#808080"/>
+                <View style={commonStyles.flexRowJCenter}>
+                    <Button onPress={()=>{}} value="观看视频" textFontSize={12} style={styles.seeVideo} underlayColor="#808080"/>
+                    <Button onPress={()=>{}} value="观看录像" textFontSize={12} style={styles.seeReplay} underlayColor="#808080"/>
                 </View>
             </View>
         )
     }
 
     _renderRow(playerInfo, index) {
+
         return (
             <View style={styles.playerRow} key={index}>
                 <View style={styles.playerBrief}>
@@ -66,20 +67,20 @@ export default class MatchDetail extends React.Component {
                         <Text style={commonStyles.fs13}>天穹守望者</Text>
                     </View>
                     <View style={styles.hero}>
-                        <Image source={require("../images/hero/hero_1.png")}/>
+                        <Image source={require("../images/hero/hero_1.png")} style={styles.heroIcon}/>
                         <Text style={commonStyles.fs13}>天穹守望者</Text>
                     </View>
                     <View style={styles.items}>
                         <View style={commonStyles.flexRow}>
-                            <Image source={require("../images/item/item_1.png")}/>
-                            <Image source={require("../images/item/item_2.png")}/>
-                            <Image source={require("../images/item/item_3.png")}/>
+                            <Image source={require("../images/item/item_1.png")} style={styles.itemIcon}/>
+                            <Image source={require("../images/item/item_2.png")} style={styles.itemIcon}/>
+                            <Image source={require("../images/item/item_3.png")} style={styles.itemIcon}/>
                         </View>
 
                         <View style={commonStyles.flexRow}>
-                            <Image source={require("../images/item/item_4.png")}/>
-                            <Image source={require("../images/item/item_5.png")}/>
-                            <Image source={require("../images/item/item_6.png")}/>
+                            <Image source={require("../images/item/item_4.png")} style={styles.itemIcon}/>
+                            <Image source={require("../images/item/item_5.png")} style={styles.itemIcon}/>
+                            <Image source={require("../images/item/item_6.png")} style={styles.itemIcon}/>
                         </View>
                     </View>
                 </View>
@@ -181,5 +182,29 @@ const styles = StyleSheet.create({
     },
     holdSpace: {
         height:40,
+    },
+    itemIcon: {
+        width:35,
+        height:20,
+    },
+    heroIcon: {
+        width:30,
+        height:40,
+    },
+    seeVideo: {
+        backgroundColor:'#a0a0a0',
+        marginRight:20,
+    },
+    seeReplay: {
+        backgroundColor:'#a0a0a0',
+        marginLeft:20,
+    },
+    campName: {
+        fontSize:15,
+        fontWeight:'500',
+        backgroundColor:'#e5e5DC',
+        padding:10
     }
+
+
 })

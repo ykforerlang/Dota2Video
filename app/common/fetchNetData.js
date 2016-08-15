@@ -10,6 +10,12 @@ const commonConf = {
     }
 }
 
+//TODO
+import leagueAll from '../base_data/leagueBriefs.json'
+exports.getLeagueList = (type) => {
+    return leagueAll[type]
+}
+
 /**
  *
  * @param optOrLeague league or opt

@@ -20,7 +20,7 @@ import Orientation from 'react-native-orientation'
 import LeagueBrief from './LeagueBrief'
 import LeagueInfo from './LeagueInfo'
 
-import dotaBaseData from '../common/dotaBaseData'
+import fetchNetData from '../common/fetchNetData'
 import commonComponent from '../common/commonComponent'
 
 export default class LeagueList extends Component {
@@ -32,7 +32,7 @@ export default class LeagueList extends Component {
 
     componentDidMount() {
         this.setState({
-            leagueList: this.state.leagueList.cloneWithRows(dotaBaseData.getLeagueList(this.props.type))
+            leagueList: this.state.leagueList.cloneWithRows(fetchNetData.getLeagueList(this.props.type))
         })
     }
 

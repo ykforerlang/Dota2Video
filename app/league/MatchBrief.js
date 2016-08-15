@@ -19,6 +19,7 @@ import Orientation from 'react-native-orientation'
 import MatchDetail from './MatchDetail'
 
 import commonStyles from '../common/commonStyle'
+import dotaBaseData from '../common/dotaBaseData'
 
 export default class MatchBrief extends Component {
     componentDidMount() {
@@ -26,7 +27,7 @@ export default class MatchBrief extends Component {
     }
 
     render() {
-        const {matchId, startTime, title, radiantTeam, direTeam} = this.props.matchInfo
+        const {matchId, startTime, title, radiantTeam, direTeam, heroes} = this.props.matchInfo
         const start = new Date(startTime)
 
         return (
@@ -47,15 +48,15 @@ export default class MatchBrief extends Component {
 
                         <View style={styles.heroIcon}>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[0]).icon}/>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[1]).icon}/>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[2]).icon}/>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[3]).icon}/>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[4]).icon}/>
 
                         </View>
 
@@ -63,15 +64,15 @@ export default class MatchBrief extends Component {
 
                         <View style={styles.heroIcon}>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[5]).icon}/>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[6]).icon}/>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[7]).icon}/>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[8]).icon}/>
                             <Image style={styles.icon}
-                                   source={{uri:"http://cdn.dota2.com.cn/apps/dota2/images/heroes/antimage_selection.png"}}/>
+                                   source={dotaBaseData.getHeroData(heroes[9]).icon}/>
                         </View>
 
                     </View>

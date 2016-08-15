@@ -17,6 +17,8 @@ import {
 import LeagueInfo from './LeagueInfo'
 
 import leaguePricePool from '../base_data/leaguePricePool.json'
+import constant from '../common/constant'
+const picServerUrl = constant.picServerUrl
 
 export default class LeagueBrief extends React.Component {
     constructor(props) {
@@ -30,7 +32,11 @@ export default class LeagueBrief extends React.Component {
 
     render() {
         const league = this.props.league
-        const iconPath = picServerUrl + 'league/' + league.id + '.jpg'
+        let iconPath = picServerUrl + 'league/' + league.id + '.png'
+        if (league.id == 4664 || league.id == 4768) {
+            iconPath = picServerUrl + 'league/' + "TI6.png"
+        }
+
         const withName = this.props.withName
         const pricePool = leaguePricePool[league.id + ""]
 
