@@ -28,7 +28,7 @@ export default class LeagueInfo extends React.Component {
     constructor(props) {
         super(props)
         const ds = new ListView.DataSource({rowHasChanged: ((r1, r2) => r1 !== r2),
-            sectionHeaderHasChanged: ((r1, r2) => r1 !== r2),
+            sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
         this.state = {dataSource: ds.cloneWithRowsAndSections({})}
         this._rc = <RefreshControl

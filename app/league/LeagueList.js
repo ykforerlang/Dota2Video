@@ -31,6 +31,8 @@ export default class LeagueList extends Component {
     }
 
     componentDidMount() {
+        Orientation.lockToPortrait()
+
         this.setState({
             leagueList: this.state.leagueList.cloneWithRows(fetchNetData.getLeagueList(this.props.type))
         })
@@ -44,7 +46,6 @@ export default class LeagueList extends Component {
         return (
             <ListView
                 initialListSize={10}
-                contentContainerStyle={styles.content}
                 dataSource={this.state.leagueList}
                 renderRow={(league) => (
                     <TouchableHighlight underlayColor="#888888"
@@ -69,9 +70,6 @@ const styles = StyleSheet.create({
     lineRoot: {
         marginTop: 5,
         overflow: 'hidden', //  配合   removeClippedSubviews
-    },
-    content: {
-        overflow: 'hidden',
     },
     leagueBack: {
         backgroundColor: '#e0e0e0',

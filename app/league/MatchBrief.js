@@ -22,9 +22,6 @@ import commonStyles from '../common/commonStyle'
 import dotaBaseData from '../common/dotaBaseData'
 
 export default class MatchBrief extends Component {
-    componentDidMount() {
-        Orientation.unlockAllOrientations()
-    }
 
     render() {
         const {matchId, startTime, title, radiantTeam, direTeam, heroes} = this.props.matchInfo

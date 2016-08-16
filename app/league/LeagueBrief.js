@@ -16,10 +16,6 @@ import {
 
 import LeagueInfo from './LeagueInfo'
 
-import leaguePricePool from '../base_data/leaguePricePool.json'
-import constant from '../common/constant'
-const picServerUrl = constant.picServerUrl
-
 export default class LeagueBrief extends React.Component {
     constructor(props) {
         super(props)
@@ -32,24 +28,21 @@ export default class LeagueBrief extends React.Component {
 
     render() {
         const league = this.props.league
-        let iconPath = picServerUrl + 'league/' + league.id + '.png'
-        if (league.id == 4664 || league.id == 4768) {
-            iconPath = picServerUrl + 'league/' + "TI6.png"
-        }
+        let iconPath = league.icon
 
         const withName = this.props.withName
-        const pricePool = leaguePricePool[league.id + ""]
+        const prizePool = league.prizePool
 
         return (
                 <View style={[styles.brief, this.props.style]} ref={component => this._root = component}>
                     <View>
                         <Text style={styles.tag}>{league.free_to_spectate ? "门票" : "免费"}</Text>
-                        <Image source={{uri: iconPath}} style={{width:80,height:53}}></Image>
+                        <Image source={{uri: iconPath}} style={styles.leagueIcon}></Image>
                     </View>
                     <View style={styles.desAndPrice}>
                         <View style={styles.nameAndPp}>
                             {withName ? <Text style={styles.name} numberOfLines={1}>{league.name}</Text> : null}
-                            {pricePool ? <Text style={styles.pricePool}>奖金:{pricePool}$</Text> : null}
+                            {prizePool ? <Text style={styles.pricePool}>奖金:{prizePool}$</Text> : null}
                         </View>
                         <Text numberOfLines={3} style={[styles.description, this.props.desStyle]}>{league.description}</Text>
                     </View>
@@ -95,5 +88,9 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 14,
         overflow: 'hidden',
-    }
+    },
+    leagueIcon: {
+        width:80,
+        height:53,
+    },
 })
