@@ -20,9 +20,7 @@ import commonComponent from '../common/commonComponent'
 import LeagueBrief from './LeagueBrief'
 import MatchBrief from './MatchBrief'
 
-import fetchNetData, {getLeagueMatches} from '../common/fetchNetData'
-
-import leagueMatches from '../../fake_data/leagueMatches.json'
+import FetchNetData from '../common/FetchNetData'
 
 export default class LeagueInfo extends React.Component {
     constructor(props) {
@@ -33,12 +31,20 @@ export default class LeagueInfo extends React.Component {
         this.state = {dataSource: ds.cloneWithRowsAndSections({})}
         this._rc = <RefreshControl
             refreshing = {false}/>
+        this._originalMatch = {}
     }
 
     componentDidMount() {
-        this.setState({
-           dataSource: this.state.dataSource.cloneWithRowsAndSections(leagueMatches.data)
-    })
+        FetchNetData.getMatchList(null, null, this.props.league.leagueid, (err, res) => {
+            if (err) {
+                //TODO 处理错误
+            } else {
+                this._originalMatch = this._handlerMatchList(res)
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch)
+                })
+            }
+        })
     }
 
     render() {
@@ -52,6 +58,8 @@ export default class LeagueInfo extends React.Component {
                 removeClippedSubviews={true}
                 renderHeader ={this._header.bind(this)}
                 refreshControl = {this._rc}
+                onEndReached={this._endReached.bind(this)}
+                onEndReachedThreshold={300}
             />
         )
     }
@@ -66,18 +74,41 @@ export default class LeagueInfo extends React.Component {
     }
 
     _renderRow(rowData) {
-        if (rowData == "_err") {
-            return <Text>加载赛事出错</Text>
-        }
-
-        return <MatchBrief matchInfo={rowData} navigator={this.props.navigator}/>
+        return <MatchBrief matchInfo={match} navigator={this.props.navigator}/>
     }
 
     _renderHeader(sectionData, sectionID) {
         return <Text style={styles.sectionTitle}>{sectionID}</Text>
     }
 
+    _endReached() {
+        const oriKeys = Object.keys(this._originalMatch)
+        const lastOri = this._originalMatch[oriKeys[oriKeys.length - 1]]
+        const lastId = lastOri[lastOri.length - 1].matchId
+        FetchNetData.getMatchList(lastId, null, this.props.league.leagueid, (err, res) => {
+            if (err) {
+                //TODO 处理错误
+            } else {
+                this._handlerMatchList.call(this, res)
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch)
+                })
+            }
+        })
+    }
 
+    _handlerMatchList(res) {
+        for (let i = 0; i < res.length; i++) {
+            const ele = res[i]
+
+            const matchArray = this._originalMatch[ele.startDay]
+            if (matchArray) {
+                this._originalMatch[ele.startDay].push(ele)
+            } else {
+                this._originalMatch[ele.startDay] = [ele]
+            }
+        }
+    }
 }
 
 const styles = StyleSheet.create({
