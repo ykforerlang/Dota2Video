@@ -33,6 +33,12 @@ class FetchNetData {
         FetchNetData._innerFetch(url, cb)
     }
 
+    static getMatchVideo(matchId, cb) {
+        let url = `${baseUrl}match/video?matchId=${matchId}`
+
+        FetchNetData._innerFetch(url, cb)
+    }
+
 
     static _innerFetch(url, cb) {
         console.log("will fetch:", url)
@@ -54,13 +60,16 @@ class FetchNetData {
 }
 //TODO  just test ...
 const fetch = require('node-fetch')
-FetchNetData.getLeagueList(null, null, "premium", (err, res) => {
+/*FetchNetData.getLeagueList(null, null, "premium", (err, res) => {
     console.log("err:", err, " res:", res)
 })
 FetchNetData.getMatchList(null, null, "4664", (err, res) => {
     console.log("err:", err, " res:", res)
 })
 FetchNetData.getMatchDetail('2569610900', (err, res) => {
+    console.log("err:", err, " res:", res)
+})*/
+FetchNetData.getMatchVideo("2569610900", (err, res) => {
     console.log("err:", err, " res:", res)
 })
 
