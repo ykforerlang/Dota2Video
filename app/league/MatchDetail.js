@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import {
     StyleSheet,
+    Alert,
     Text,
     View,
     TouchableHighlight,
@@ -18,89 +19,141 @@ import {
 
 import commonStyles from '../common/commonStyle'
 import Button from '../common/Button'
+import commonComponent from '../common/commonComponent'
+
+import FetchNetData from '../common/FetchNetData'
+import constant, {picServerUrl} from '../common/constant'
+import dotaBaseData from '../common/dotaBaseData'
+import util from '../common/util'
 
 export default class MatchDetail extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.navigator = props.navigator
+
+        this.state = {
+            matchDetail: null
+        }
+    }
+
+    componentDidMount() {
+        FetchNetData.getMatchDetail(this.props.matchInfo, (err, res) => {
+            if (err) {
+                //TODO 错误处理
+            } else {
+                this.setState({
+                    matchDetail: res
+                })
+            }
+        })
+    }
 
     render() {
+        let playerDetail = null
+        if (!this.state.matchDetail) {
+            playerDetail = commonComponent.loadData()
+        } else {
+            const playerList = this.state.matchDetail.players
+
+            playerDetail = [<Text style={styles.campName}>天辉</Text>]
+            playerDetail = playerDetail.concat(playerList.slice(0, 5).map((ele, index) => {
+                return this._renderRow(ele, index)
+            }))
+            playerDetail.push(<Text style={styles.campName}>夜魇</Text>)
+            playerDetail = playerDetail.concat(playerList.slice(5).map((ele, index) => {
+                return this._renderRow(ele, index)
+            }))
+
+            playerDetail.push(<View style={styles.holdSpace}></View>)
+        }
+
         return (
             <ScrollView>
                 {this._title()}
-                <Text style={styles.campName}>天辉</Text>
-                {[1, 2, 3, 4, 5].map((ele, index) => {
-                    return this._renderRow(ele, index)
-                })}
-                <Text style={styles.campName}>夜魇</Text>
-                {[1, 2, 3, 4, 5].map((ele, index) => {
-                    return this._renderRow(ele, index)
-                })}
-                <View style={styles.holdSpace}></View>
+
+                {playerDetail}
             </ScrollView>
         )
     }
 
     _title() {
+        const {matchId, radiantTeam, direTeam} = this.props.matchInfo
+        const matchDetail = this.state.matchDetail
+
         return (
             <View style={styles.title}>
                 <View style={commonStyles.flexRow}>
-                    <Text style={commonStyles.fs14Flex1L}>比赛id: 123234455</Text>
-                    <Text style={commonStyles.fs14Flex1L}>时长: 60分88秒</Text>
+                    <Text style={commonStyles.fs14Flex1L}>比赛id: {matchId}</Text>
+                    <Text style={commonStyles.fs14Flex1L}>时长: {matchDetail ? matchDetail.duration : '-分-秒'}</Text>
                 </View>
                 <View style={[commonStyles.flexRow, styles.titleSecondLine]}>
-                    <Text style={commonStyles.fs14Flex1L}>人头: 33/40</Text>
-                    <Text style={commonStyles.fs14Flex1L}>天辉:LGD/夜魇:EHOME</Text>
+                    <Text style={commonStyles.fs14Flex1L}>人头: {matchDetail ? matchDetail.radiantScore + "/" + matchDetail.direScore : "-/-"}</Text>
+                    <Text style={commonStyles.fs14Flex1L}>天辉:{radiantTeam}/夜魇:{direTeam}</Text>
                 </View>
                 <View style={commonStyles.flexRowJCenter}>
-                    <Button onPress={()=>{}} value="观看视频" textFontSize={12} style={styles.seeVideo} underlayColor="#808080"/>
-                    <Button onPress={()=>{}} value="观看录像" textFontSize={12} style={styles.seeReplay} underlayColor="#808080"/>
+                    <Button onPress={()=>this._handleVideo.bind(this)} value="观看视频" textFontSize={12} style={styles.seeVideo} underlayColor="#808080"/>
+                    <Button onPress={()=>this._handleReplay.bind(this)} value="观看录像" textFontSize={12} style={styles.seeReplay} underlayColor="#808080"/>
                 </View>
             </View>
         )
     }
 
     _renderRow(playerInfo, index) {
-
+        const heroId = this.props.matchInfo.heroes[index]
+        const heroInfo = dotaBaseData.getHeroData(heroId)
+        const itemList = playerInfo.itemList
         return (
             <View style={styles.playerRow} key={index}>
                 <View style={styles.playerBrief}>
                     <View style={styles.player}>
-                        <Image source={require("../images/player/514364.jpg")}/>
-                        <Text style={commonStyles.fs13}>天穹守望者</Text>
+                        <Image source={{uri: picServerUrl + playerInfo.icon}} style={styles.playerIcon} />
+                        <Text style={commonStyles.fs13}>{playerInfo.name}</Text>
                     </View>
                     <View style={styles.hero}>
-                        <Image source={require("../images/hero/hero_1.png")} style={styles.heroIcon}/>
-                        <Text style={commonStyles.fs13}>天穹守望者</Text>
+                        <Image source={heroInfo.icon} style={styles.heroIcon}/>
+                        <Text style={commonStyles.fs13}>{heroInfo.name}</Text>
                     </View>
                     <View style={styles.items}>
                         <View style={commonStyles.flexRow}>
-                            <Image source={require("../images/item/item_1.png")} style={styles.itemIcon}/>
-                            <Image source={require("../images/item/item_2.png")} style={styles.itemIcon}/>
-                            <Image source={require("../images/item/item_3.png")} style={styles.itemIcon}/>
+                            <Image source={dotaBaseData.getItemData(itemList[0]).icon} style={styles.itemIcon}/>
+                            <Image source={dotaBaseData.getItemData(itemList[1]).icon} style={styles.itemIcon}/>
+                            <Image source={dotaBaseData.getItemData(itemList[2]).icon} style={styles.itemIcon}/>
                         </View>
 
                         <View style={commonStyles.flexRow}>
-                            <Image source={require("../images/item/item_4.png")} style={styles.itemIcon}/>
-                            <Image source={require("../images/item/item_5.png")} style={styles.itemIcon}/>
-                            <Image source={require("../images/item/item_6.png")} style={styles.itemIcon}/>
+                            <Image source={dotaBaseData.getItemData(itemList[3]).icon} style={styles.itemIcon}/>
+                            <Image source={dotaBaseData.getItemData(itemList[4]).icon} style={styles.itemIcon}/>
+                            <Image source={dotaBaseData.getItemData(itemList[5]).icon} style={styles.itemIcon}/>
                         </View>
                     </View>
                 </View>
 
                 <View style={styles.detail}>
                     <View style={styles.detailLeft}>
-                        <Text style={commonStyles.fs12}>等级: 11</Text>
-                        <Text style={commonStyles.fs12}>金钱: 1678</Text>
-                        <Text style={commonStyles.fs12}>K/D/A: 10/22/3</Text>
-                        <Text style={commonStyles.fs12}>治疗: 2000(30%)</Text>
+                        <Text style={commonStyles.fs12}>等级: {playerInfo.level}</Text>
+                        <Text style={commonStyles.fs12}>金钱: {playerInfo.gold}({playerInfo.goldRate})</Text>
+                        <Text style={commonStyles.fs12}>K/D/A: {playerInfo.kills}/{playerInfo.deaths}/{playerInfo.assists}</Text>
+                        <Text style={commonStyles.fs12}>治疗: {playerInfo.healing}({playerInfo.healingRate})</Text>
                     </View>
                     <View style={styles.detailRight}>
-                        <Text style={commonStyles.fs12}>正/反补: 200/20</Text>
-                        <Text style={commonStyles.fs12}>GPM/XPM: 780/560</Text>
-                        <Text style={commonStyles.fs12}>对塔伤害: 5000(30%)</Text>
-                        <Text style={commonStyles.fs12}>对英雄伤害: 5000(30%)</Text>
+                        <Text style={commonStyles.fs12}>正/反补: {playerInfo.lastHits}/{playerInfo.denies}</Text>
+                        <Text style={commonStyles.fs12}>GPM/XPM: {playerInfo.gpm}/{playerInfo.xpm}</Text>
+                        <Text style={commonStyles.fs12}>对塔伤害: {playerInfo.towerDamage}({playerInfo.towerDamageRate})</Text>
+                        <Text style={commonStyles.fs12}>对英雄伤害: {playerInfo.heroDamage}({playerInfo.heroDamageRate})</Text>
                     </View>
                 </View>
             </View>
         )
+    }
+
+    _handleVideo() {
+        //TODO  youku webview 播放
+    }
+
+    _handleReplay() {
+        //TODO animation
+        Alert.alert("提示", "观看replay将于下个版本开放")
     }
 
 }
@@ -190,6 +243,10 @@ const styles = StyleSheet.create({
     heroIcon: {
         width:30,
         height:40,
+    },
+    playerIcon: {
+        width:32,
+        height:32,
     },
     seeVideo: {
         backgroundColor:'#a0a0a0',

@@ -1,7 +1,7 @@
 /**
  * Created by pwrd on 16/8/2.
  */
-const baseUrl = "http://192.168.1.120:3000/"
+const baseUrl = "http://127.0.0.1:3000/"
 const commonConf = {
     method: 'GET',
     headers: {
@@ -10,44 +10,58 @@ const commonConf = {
     }
 }
 
-//TODO
-import leagueAll from '../base_data/leagueBriefs.json'
-exports.getLeagueList = (type) => {
-    return leagueAll[type]
-}
+class FetchNetData {
+    static getLeagueList(maxItemdef, minItemdef, type, cb) {
+        let url = `${baseUrl}league/getList?type=${type}`
+        url += (maxItemdef ? "&maxItemdef=" + maxItemdef : "")
+        url += (minItemdef ? "&minItemdef=" + minItemdef : "")
 
-/**
- *
- * @param optOrLeague league or opt
- * @param opt.leaugeId
- * @param opt.matchNum default is 10
- */
-exports.getLeagueMatches = (optOrLeague, cb) => {
-    let opt
-    if(typeof optOrLeague != "object") {
-        opt = {
-            leagueId:optOrLeague,
-            matchNum:10,
-        }
-    } else {
-        opt = optOrLeague
+        FetchNetData._innerFetch(url, cb)
     }
 
-    const url = `${baseUrl}league/${opt.leagueId}/getMatches`
-    fetch(url, commonConf)
-        .then((res) => {
+    static getMatchList(maxId, minId, leagueId, cb) {
+        let url = `${baseUrl}league/matchList?leagueId=${leagueId}`
+        url += (maxId ? "&maxId=" + maxId: "")
+        url += (minId ? "&minId=" + minId: "")
 
-            console.log(res)
-            if (res.status != 200) {
-                cb("status != 200")
-                return
-            }
-            return res.json()
-        })
-        .then((resJson) => {
-            cb(null, resJson.data)
-        })
-        .catch((error)=> {
-            cb(error)
-        })
+        FetchNetData._innerFetch(url, cb)
+    }
+
+    static getMatchDetail(matchId, cb) {
+        let url = `${baseUrl}match/detail?matchId=${matchId}`
+
+        FetchNetData._innerFetch(url, cb)
+    }
+
+
+    static _innerFetch(url, cb) {
+        console.log("will fetch:", url)
+        fetch(url, commonConf)
+            .then(res => {
+                if (!res.ok) {
+                    cb("fetch url:" + url + " error!", null)
+                    return
+                }
+                return res.json()
+            })
+            .then(res => {
+                cb(null, res)
+            })
+            .catch(err => {
+                cb(err, null)
+            })
+    }
 }
+//TODO  just test ...
+const fetch = require('node-fetch')
+FetchNetData.getLeagueList(null, null, "premium", (err, res) => {
+    console.log("err:", err, " res:", res)
+})
+FetchNetData.getMatchList(null, null, "4664", (err, res) => {
+    console.log("err:", err, " res:", res)
+})
+FetchNetData.getMatchDetail('2569610900', (err, res) => {
+    console.log("err:", err, " res:", res)
+})
+
+module.exports = FetchNetData

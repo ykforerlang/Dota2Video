@@ -20,21 +20,30 @@ import Orientation from 'react-native-orientation'
 import LeagueBrief from './LeagueBrief'
 import LeagueInfo from './LeagueInfo'
 
-import fetchNetData from '../common/fetchNetData'
+import FetchNetData from '../common/FetchNetData'
 import commonComponent from '../common/commonComponent'
 
 export default class LeagueList extends Component {
     constructor(props) {
         super(props)
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.id !== r2.id})
-        this.state = {leagueList: this.ds.cloneWithRows([])}
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
+        this.state = {leagueList: ds.cloneWithRows([])}
+
+        this._originalArray = []
     }
 
     componentDidMount() {
         Orientation.lockToPortrait()
 
-        this.setState({
-            leagueList: this.state.leagueList.cloneWithRows(fetchNetData.getLeagueList(this.props.type))
+        FetchNetData.getLeagueList(null, null, this.props.type, (err, res) => {
+            if (err) {
+               //TODO 显示加载失败
+            } else {
+                this._originalArray = this._originalArray.concat(res)
+                this.setState({
+                    leagueList: this.state.leagueList.cloneWithRows(this._originalArray)
+                })
+            }
         })
     }
 
@@ -57,12 +66,29 @@ export default class LeagueList extends Component {
                     )}
                 showsVerticalScrollIndicator={true}
                 removeClippedSubviews={true}
+                onEndReached={this._endReached.bind(this)}
+                onEndReachedThreshold={300}
             />
         )
     }
 
     _renderLeagueDetail(league) {
-        this.props.navigator.push({league: league, component: LeagueInfo, naviTitle: league.name, naviBack: '锦标赛'})
+        this.props.navigator.push({league: league, component: LeagueInfo, naviTitle: league.name, naviBack: '赛事'})
+    }
+
+    _endReached() {
+        const last  = this._originalArray[this._originalArray.length - 1]
+        FetchNetData.getLeagueList(last.itemdef, null, this.props.type, (err, res)=> {
+            if (err) return
+            this._originalArray = this._originalArray.concat(res)
+            this.setState({
+                leagueList: this.state.leagueList.cloneWithRows(this._originalArray)
+            })
+        })
+    }
+
+    _addHeaderLeagues() {
+        //TODO 下拉加载
     }
 }
 

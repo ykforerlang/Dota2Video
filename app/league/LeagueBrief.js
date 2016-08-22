@@ -16,6 +16,9 @@ import {
 
 import LeagueInfo from './LeagueInfo'
 
+import constant, {picServerUrl} from '../common/constant'
+
+
 export default class LeagueBrief extends React.Component {
     constructor(props) {
         super(props)
@@ -28,7 +31,7 @@ export default class LeagueBrief extends React.Component {
 
     render() {
         const league = this.props.league
-        let iconPath = league.icon
+        let iconPath = `${picServerUrl}${league.icon}`
 
         const withName = this.props.withName
         const prizePool = league.prizePool
@@ -36,7 +39,7 @@ export default class LeagueBrief extends React.Component {
         return (
                 <View style={[styles.brief, this.props.style]} ref={component => this._root = component}>
                     <View>
-                        <Text style={styles.tag}>{league.free_to_spectate ? "门票" : "免费"}</Text>
+                        <Text style={styles.tag}>{league.freeToSpectate ? "门票" : "免费"}</Text>
                         <Image source={{uri: iconPath}} style={styles.leagueIcon}></Image>
                     </View>
                     <View style={styles.desAndPrice}>

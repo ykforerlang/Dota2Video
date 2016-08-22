@@ -15,17 +15,15 @@ import {
 } from 'react-native';
 
 import Orientation from 'react-native-orientation'
-
 import MatchDetail from './MatchDetail'
-
 import commonStyles from '../common/commonStyle'
+
 import dotaBaseData from '../common/dotaBaseData'
 
 export default class MatchBrief extends Component {
 
     render() {
-        const {matchId, startTime, title, radiantTeam, direTeam, heroes} = this.props.matchInfo
-        const start = new Date(startTime)
+        const {matchId, startTime, type, radiantTeam, direTeam, heroes} = this.props.matchInfo
 
         return (
             <TouchableHighlight
@@ -37,8 +35,8 @@ export default class MatchBrief extends Component {
 
                     <View style={styles.briefText}>
                         <Text numberOfLines={1} style={commonStyles.fs12Flex1}>{radiantTeam + " 对阵 " + direTeam}</Text>
-                        <Text style={commonStyles.fs12Flex1}>开始: {start.getHours() + ':' + start.getMinutes()}</Text>
-                        <Text style={commonStyles.fs12Flex1}>类型: {title}</Text>
+                        <Text style={commonStyles.fs12Flex1}>开始: {startTime}</Text>
+                        <Text style={commonStyles.fs12Flex1}>类型: {type}</Text>
                     </View>
 
                     <View style={styles.heroAll}>
@@ -81,6 +79,7 @@ export default class MatchBrief extends Component {
     _handlePress() {
         this.props.navigator.push({
             component: MatchDetail,
+            matchInfo: this.props.matchInfo,
         })
     }
 }
