@@ -19,6 +19,7 @@ import {
 
 import commonStyles from '../common/commonStyle'
 import Button from '../common/Button'
+import Video from '../good_video/Video'
 import commonComponent from '../common/commonComponent'
 
 import FetchNetData from '../common/FetchNetData'
@@ -148,7 +149,10 @@ export default class MatchDetail extends React.Component {
     }
 
     _handleVideo() {
-        //TODO  youku webview 播放
+        this.navigator.push({
+            component:Video,
+            matchId: this.props.matchInfo.matchId
+        })
     }
 
     _handleReplay() {
