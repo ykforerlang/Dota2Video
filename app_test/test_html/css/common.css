@@ -1,0 +1,47 @@
+body, span, div, img{
+    -webkit-text-size-adjust:none;
+    display: -webkit-flex !important;
+    display: flex !important;
+    flex-direction: column ;
+    justify-content: flex-start ;
+    flex-wrap: nowrap ;
+    align-items: stretch;
+    flex-shrink: 0!important;
+    align-self: auto;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: gray;
+    align-items: center;
+}
+
+
+#container {
+    position: absolute;
+    left: 200px;
+    top: 100px;
+    background: white;
+}
+
+
+.iphone5 {
+    width: 320px;
+    height: 568px;
+}
+
+.iphone6 {
+    width: 375px;
+    height: 667px;
+}
+
+.iphone6plus {
+    width: 414px;
+    height: 736px;
+}
+
+.nexus6p {
+    width: 435px;
+    height: 773px;
+}

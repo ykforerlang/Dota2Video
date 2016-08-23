@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello React</title>
+    <script src="../lib/react.js"></script>
+    <script src="../lib/react-dom.js"></script>
+    <script src="../lib/browser.js"></script>
+    <script src="../lib/require.min.js"></script>
+    <script src="../lib/jquery-1.12.0.min.js"></script>
+    <script type="text/babel" src="../lib/native-replace.js"></script>
+    <link href="../css/common.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+<div id="container" class="iphone5">
+
+</div>
+<script type="text/babel" src="LeagueAll.js" charset="utf-8"></script>
+<script>
+    $(function() {
+        window.changePhone = function(phone) {
+            $("#container").removeAttr("class")
+            $("#container").addClass(phone)
+        }
+    })
+</script>
+</body>
+</html>
