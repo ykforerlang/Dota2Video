@@ -93,8 +93,8 @@ export default class MatchDetail extends React.Component {
                     <Text style={commonStyles.fs14Flex1L}>天辉:{radiantTeam}/夜魇:{direTeam}</Text>
                 </View>
                 <View style={commonStyles.flexRowJCenter}>
-                    <Button onPress={()=>this._handleVideo.bind(this)} value="观看视频" textFontSize={12} style={styles.seeVideo} underlayColor="#808080"/>
-                    <Button onPress={()=>this._handleReplay.bind(this)} value="观看录像" textFontSize={12} style={styles.seeReplay} underlayColor="#808080"/>
+                    <Button onPress={this._handleVideo.bind(this)} value="观看视频" textFontSize={12} style={styles.seeVideo} underlayColor="#808080"/>
+                    <Button onPress={this._handleReplay.bind(this)} value="观看录像" textFontSize={12} style={styles.seeReplay} underlayColor="#808080"/>
                 </View>
             </View>
         )

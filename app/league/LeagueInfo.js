@@ -60,6 +60,7 @@ export default class LeagueInfo extends React.Component {
                 refreshControl = {this._rc}
                 onEndReached={this._endReached.bind(this)}
                 onEndReachedThreshold={300}
+                scrollRenderAheadDistance={600}
             />
         )
     }
