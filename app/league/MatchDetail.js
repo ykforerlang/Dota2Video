@@ -39,10 +39,11 @@ export default class MatchDetail extends React.Component {
     }
 
     componentDidMount() {
-        FetchNetData.getMatchDetail(this.props.matchInfo, (err, res) => {
+        FetchNetData.getMatchDetail(this.props.matchInfo.matchId, (err, res) => {
             if (err) {
                 //TODO 错误处理
             } else {
+                console.log('hi....')
                 this.setState({
                     matchDetail: res
                 })
@@ -53,21 +54,25 @@ export default class MatchDetail extends React.Component {
     render() {
         let playerDetail = null
         if (!this.state.matchDetail) {
-            playerDetail = commonComponent.loadData()
+            playerDetail = commonComponent.loadData(styles.loadData, 'small')
         } else {
+            console.log("....before players")
             const playerList = this.state.matchDetail.players
 
-            playerDetail = [<Text style={styles.campName}>天辉</Text>]
+            playerDetail = [<Text style={styles.campName} key="radiant">天辉</Text>]
             playerDetail = playerDetail.concat(playerList.slice(0, 5).map((ele, index) => {
                 return this._renderRow(ele, index)
             }))
-            playerDetail.push(<Text style={styles.campName}>夜魇</Text>)
+            playerDetail.push(<Text style={styles.campName} key="dire">夜魇</Text>)
             playerDetail = playerDetail.concat(playerList.slice(5).map((ele, index) => {
-                return this._renderRow(ele, index)
+                return this._renderRow(ele, index + 5)
             }))
+            console.log("hi....44")
 
-            playerDetail.push(<View style={styles.holdSpace}></View>)
+            playerDetail.push(<View style={styles.holdSpace} key="holdSpace"></View>)
+            console.log(this.state.matchDetail)
         }
+        console.log(this.state.matchDetail)
 
         return (
             <ScrollView>
@@ -101,9 +106,11 @@ export default class MatchDetail extends React.Component {
     }
 
     _renderRow(playerInfo, index) {
+        console.log("index:", index)
         const heroId = this.props.matchInfo.heroes[index]
         const heroInfo = dotaBaseData.getHeroData(heroId)
         const itemList = playerInfo.itemList
+        console.log(heroId, heroInfo, itemList, playerInfo)
         return (
             <View style={styles.playerRow} key={index}>
                 <View style={styles.playerBrief}>
@@ -265,6 +272,10 @@ const styles = StyleSheet.create({
         fontWeight:'500',
         backgroundColor:'#e5e5DC',
         padding:10
+    },
+
+    loadData: {
+        marginTop:30,
     }
 
 

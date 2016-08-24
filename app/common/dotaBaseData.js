@@ -6,19 +6,19 @@
 
 //test file code
 /*const fs = require("fs")
-var require = (path)=>{
-    fs.exists(path, (e) => {
-        if (!e) {
-            console.log(path)
-        }
-    })
-}*/
+ var require = (path)=>{
+ fs.exists(path, (e) => {
+ if (!e) {
+ console.log(path)
+ }
+ })
+ }*/
 
 exports.getHeroData = (id) => {
-   return heroData[id]
+    return heroData[id]
 }
 exports.getItemData = (id) => {
-   return itemData[id]
+    return itemData[id]
 }
 
 
@@ -581,6 +581,11 @@ const heroData = {
 }
 
 const itemData = {
+    "0": {
+        "id": 0,
+        "name": "",
+        "icon": require('../images/item/item_0.png')
+    },
     "1": {
         "id": 1,
         "name": "闪烁匕首",
@@ -759,7 +764,7 @@ const itemData = {
     "36": {
         "id": 36,
         "name": "魔杖",
-        "icon": require('../images/item/item_36.png')
+        "icon": require('../images/item/item_35.png')
     },
     "37": {
         "id": 37,
@@ -819,7 +824,7 @@ const itemData = {
     "48": {
         "id": 48,
         "name": "远行鞋",
-        "icon": require('../images/item/item_48.png')
+        "icon": require('../images/item/item_47.png')
     },
     "49": {
         "id": 49,
@@ -829,7 +834,7 @@ const itemData = {
     "50": {
         "id": 50,
         "name": "相位鞋",
-        "icon": require('../images/item/item_50.png')
+        "icon": require('../images/item/item_49.png')
     },
     "51": {
         "id": 51,
@@ -894,7 +899,7 @@ const itemData = {
     "63": {
         "id": 63,
         "name": "动力鞋",
-        "icon": require('../images/item/item_63.png')
+        "icon": require('../images/item/item_62.png')
     },
     "64": {
         "id": 64,
@@ -904,7 +909,7 @@ const itemData = {
     "65": {
         "id": 65,
         "name": "迈达斯之手",
-        "icon": require('../images/item/item_65.png')
+        "icon": require('../images/item/item_64.png')
     },
     "66": {
         "id": 66,
@@ -914,12 +919,12 @@ const itemData = {
     "67": {
         "id": 67,
         "name": "空明杖",
-        "icon": require('../images/item/item_67.png')
+        "icon": require('../images/item/item_66.png')
     },
     "68": {
         "id": 68,
         "name": "卷轴：坚韧球",
-        "icon": require('../images/item/item_68.png')
+        "icon": require('../images/item/item_69.png')
     },
     "69": {
         "id": 69,
@@ -944,7 +949,7 @@ const itemData = {
     "73": {
         "id": 73,
         "name": "护腕",
-        "icon": require('../images/item/item_73.png')
+        "icon": require('../images/item/item_72.png')
     },
     "74": {
         "id": 74,
@@ -954,12 +959,12 @@ const itemData = {
     "75": {
         "id": 75,
         "name": "怨灵系带",
-        "icon": require('../images/item/item_75.png')
+        "icon": require('../images/item/item_74.png')
     },
     "76": {
         "id": 76,
         "name": "卷轴：空灵挂件",
-        "icon": require('../images/item/item_76.png')
+        "icon": require('../images/item/item_77.png')
     },
     "77": {
         "id": 77,
@@ -969,7 +974,7 @@ const itemData = {
     "78": {
         "id": 78,
         "name": "卷轴：梅肯斯姆",
-        "icon": require('../images/item/item_78.png')
+        "icon": require('../images/item/item_79.png')
     },
     "79": {
         "id": 79,
@@ -979,7 +984,7 @@ const itemData = {
     "80": {
         "id": 80,
         "name": "卷轴：弗拉迪米尔的祭品",
-        "icon": require('../images/item/item_80.png')
+        "icon": require('../images/item/item_81.png')
     },
     "81": {
         "id": 81,
@@ -999,7 +1004,7 @@ const itemData = {
     "86": {
         "id": 86,
         "name": "玄冥盾牌",
-        "icon": require('../images/item/item_86.png')
+        "icon": require('../images/item/item_85.png')
     },
     "87": {
         "id": 87,
@@ -1009,7 +1014,7 @@ const itemData = {
     "88": {
         "id": 88,
         "name": "王者之戒",
-        "icon": require('../images/item/item_88.png')
+        "icon": require('../images/item/item_87.png')
     },
     "89": {
         "id": 89,
@@ -1019,7 +1024,7 @@ const itemData = {
     "90": {
         "id": 90,
         "name": "洞察烟斗",
-        "icon": require('../images/item/item_90.png')
+        "icon": require('../images/item/item_89.png')
     },
     "91": {
         "id": 91,
@@ -1029,7 +1034,7 @@ const itemData = {
     "92": {
         "id": 92,
         "name": "影之灵龛",
-        "icon": require('../images/item/item_92.png')
+        "icon": require('../images/item/item_91.png')
     },
     "93": {
         "id": 93,
@@ -1039,7 +1044,7 @@ const itemData = {
     "94": {
         "id": 94,
         "name": "恢复头巾",
-        "icon": require('../images/item/item_94.png')
+        "icon": require('../images/item/item_93.png')
     },
     "95": {
         "id": 95,
@@ -1049,12 +1054,12 @@ const itemData = {
     "96": {
         "id": 96,
         "name": "邪恶镰刀",
-        "icon": require('../images/item/item_96.png')
+        "icon": require('../images/item/item_95.png')
     },
     "97": {
         "id": 97,
         "name": "卷轴：紫怨",
-        "icon": require('../images/item/item_97.png')
+        "icon": require('../images/item/item_98.png')
     },
     "98": {
         "id": 98,
@@ -1064,7 +1069,7 @@ const itemData = {
     "99": {
         "id": 99,
         "name": "卷轴：Eul的神圣法杖",
-        "icon": require('../images/item/item_99.png')
+        "icon": require('../images/item/item_100.png')
     },
     "100": {
         "id": 100,
@@ -1079,17 +1084,17 @@ const itemData = {
     "102": {
         "id": 102,
         "name": "原力法杖",
-        "icon": require('../images/item/item_102.png')
+        "icon": require('../images/item/item_101.png')
     },
     "103": {
         "id": 103,
         "name": "卷轴：达贡之神力",
-        "icon": require('../images/item/item_103.png')
+        "icon": require('../images/item/item_201.png')
     },
     "104": {
         "id": 104,
         "name": "达贡之神力",
-        "icon": require('../images/item/item_104.png')
+        "icon": require('../images/item/item_201.png')
     },
     "105": {
         "id": 105,
@@ -1109,7 +1114,7 @@ const itemData = {
     "108": {
         "id": 108,
         "name": "阿哈利姆神杖",
-        "icon": require('../images/item/item_108.png')
+        "icon": require('../images/item/item_107.png')
     },
     "109": {
         "id": 109,
@@ -1119,7 +1124,7 @@ const itemData = {
     "110": {
         "id": 110,
         "name": "刷新球",
-        "icon": require('../images/item/item_110.png')
+        "icon": require('../images/item/item_109.png')
     },
     "111": {
         "id": 111,
@@ -1129,7 +1134,7 @@ const itemData = {
     "112": {
         "id": 112,
         "name": "强袭胸甲",
-        "icon": require('../images/item/item_112.png')
+        "icon": require('../images/item/item_111.png')
     },
     "113": {
         "id": 113,
@@ -1139,7 +1144,7 @@ const itemData = {
     "114": {
         "id": 114,
         "name": "恐鳌之心",
-        "icon": require('../images/item/item_114.png')
+        "icon": require('../images/item/item_113.png')
     },
     "115": {
         "id": 115,
@@ -1149,7 +1154,7 @@ const itemData = {
     "116": {
         "id": 116,
         "name": "黑皇杖",
-        "icon": require('../images/item/item_116.png')
+        "icon": require('../images/item/item_115.png')
     },
     "117": {
         "id": 117,
@@ -1164,7 +1169,7 @@ const itemData = {
     "119": {
         "id": 119,
         "name": "希瓦的守护",
-        "icon": require('../images/item/item_119.png')
+        "icon": require('../images/item/item_118.png')
     },
     "120": {
         "id": 120,
@@ -1174,7 +1179,7 @@ const itemData = {
     "121": {
         "id": 121,
         "name": "血精石",
-        "icon": require('../images/item/item_121.png')
+        "icon": require('../images/item/item_120.png')
     },
     "122": {
         "id": 122,
@@ -1184,7 +1189,7 @@ const itemData = {
     "123": {
         "id": 123,
         "name": "林肯法球",
-        "icon": require('../images/item/item_123.png')
+        "icon": require('../images/item/item_122.png')
     },
     "124": {
         "id": 124,
@@ -1194,12 +1199,12 @@ const itemData = {
     "125": {
         "id": 125,
         "name": "先锋盾",
-        "icon": require('../images/item/item_125.png')
+        "icon": require('../images/item/item_124.png')
     },
     "126": {
         "id": 126,
         "name": "卷轴：刃甲",
-        "icon": require('../images/item/item_126.png')
+        "icon": require('../images/item/item_127.png')
     },
     "127": {
         "id": 127,
@@ -1219,7 +1224,7 @@ const itemData = {
     "130": {
         "id": 130,
         "name": "卷轴：挑战头巾",
-        "icon": require('../images/item/item_130.png')
+        "icon": require('../images/item/item_131.png')
     },
     "131": {
         "id": 131,
@@ -1234,7 +1239,7 @@ const itemData = {
     "133": {
         "id": 133,
         "name": "圣剑",
-        "icon": require('../images/item/item_133.png')
+        "icon": require('../images/item/item_132.png')
     },
     "134": {
         "id": 134,
@@ -1244,7 +1249,7 @@ const itemData = {
     "135": {
         "id": 135,
         "name": "金箍棒",
-        "icon": require('../images/item/item_135.png')
+        "icon": require('../images/item/item_134.png')
     },
     "136": {
         "id": 136,
@@ -1254,7 +1259,7 @@ const itemData = {
     "137": {
         "id": 137,
         "name": "辉耀",
-        "icon": require('../images/item/item_137.png')
+        "icon": require('../images/item/item_136.png')
     },
     "138": {
         "id": 138,
@@ -1264,7 +1269,7 @@ const itemData = {
     "139": {
         "id": 139,
         "name": "蝴蝶",
-        "icon": require('../images/item/item_139.png')
+        "icon": require('../images/item/item_138.png')
     },
     "140": {
         "id": 140,
@@ -1274,7 +1279,7 @@ const itemData = {
     "141": {
         "id": 141,
         "name": "代达罗斯之殇",
-        "icon": require('../images/item/item_141.png')
+        "icon": require('../images/item/item_140.png')
     },
     "142": {
         "id": 142,
@@ -1284,7 +1289,7 @@ const itemData = {
     "143": {
         "id": 143,
         "name": "碎颅锤",
-        "icon": require('../images/item/item_143.png')
+        "icon": require('../images/item/item_142.png')
     },
     "144": {
         "id": 144,
@@ -1294,7 +1299,7 @@ const itemData = {
     "145": {
         "id": 145,
         "name": "狂战斧",
-        "icon": require('../images/item/item_145.png')
+        "icon": require('../images/item/item_144.png')
     },
     "146": {
         "id": 146,
@@ -1304,7 +1309,7 @@ const itemData = {
     "147": {
         "id": 147,
         "name": "幻影斧",
-        "icon": require('../images/item/item_147.png')
+        "icon": require('../images/item/item_146.png')
     },
     "148": {
         "id": 148,
@@ -1314,7 +1319,7 @@ const itemData = {
     "149": {
         "id": 149,
         "name": "水晶剑",
-        "icon": require('../images/item/item_149.png')
+        "icon": require('../images/item/item_148.png')
     },
     "150": {
         "id": 150,
@@ -1324,7 +1329,7 @@ const itemData = {
     "151": {
         "id": 151,
         "name": "莫尔迪基安的臂章",
-        "icon": require('../images/item/item_151.png')
+        "icon": require('../images/item/item_150.png')
     },
     "152": {
         "id": 152,
@@ -1359,7 +1364,7 @@ const itemData = {
     "158": {
         "id": 158,
         "name": "雷神之锤",
-        "icon": require('../images/item/item_158.png')
+        "icon": require('../images/item/item_157.png')
     },
     "159": {
         "id": 159,
@@ -1369,12 +1374,12 @@ const itemData = {
     "160": {
         "id": 160,
         "name": "斯嘉蒂之眼",
-        "icon": require('../images/item/item_160.png')
+        "icon": require('../images/item/item_159.png')
     },
     "161": {
         "id": 161,
         "name": "卷轴：散华",
-        "icon": require('../images/item/item_161.png')
+        "icon": require('../images/item/item_162.png')
     },
     "162": {
         "id": 162,
@@ -1384,7 +1389,7 @@ const itemData = {
     "163": {
         "id": 163,
         "name": "卷轴：支配头盔",
-        "icon": require('../images/item/item_163.png')
+        "icon": require('../images/item/item_164.png')
     },
     "164": {
         "id": 164,
@@ -1399,7 +1404,7 @@ const itemData = {
     "166": {
         "id": 166,
         "name": "漩涡",
-        "icon": require('../images/item/item_166.png')
+        "icon": require('../images/item/item_165.png')
     },
     "167": {
         "id": 167,
@@ -1414,7 +1419,7 @@ const itemData = {
     "169": {
         "id": 169,
         "name": "卷轴：夜叉",
-        "icon": require('../images/item/item_169.png')
+        "icon": require('../images/item/item_170.png')
     },
     "170": {
         "id": 170,
@@ -1429,12 +1434,12 @@ const itemData = {
     "172": {
         "id": 172,
         "name": "疯狂面具",
-        "icon": require('../images/item/item_172.png')
+        "icon": require('../images/item/item_171.png')
     },
     "173": {
         "id": 173,
         "name": "卷轴：净魂之刃",
-        "icon": require('../images/item/item_173.png')
+        "icon": require('../images/item/item_174.png')
     },
     "174": {
         "id": 174,
@@ -1449,12 +1454,12 @@ const itemData = {
     "176": {
         "id": 176,
         "name": "虚灵之刃",
-        "icon": require('../images/item/item_176.png')
+        "icon": require('../images/item/item_175.png')
     },
     "177": {
         "id": 177,
         "name": "卷轴：灵魂之戒",
-        "icon": require('../images/item/item_177.png')
+        "icon": require('../images/item/item_178.png')
     },
     "178": {
         "id": 178,
@@ -1469,7 +1474,7 @@ const itemData = {
     "180": {
         "id": 180,
         "name": "奥术鞋",
-        "icon": require('../images/item/item_180.png')
+        "icon": require('../images/item/item_179.png')
     },
     "181": {
         "id": 181,
@@ -1489,7 +1494,7 @@ const itemData = {
     "184": {
         "id": 184,
         "name": "卷轴：韧鼓",
-        "icon": require('../images/item/item_184.png')
+        "icon": require('../images/item/item_185.png')
     },
     "185": {
         "id": 185,
@@ -1504,7 +1509,7 @@ const itemData = {
     "187": {
         "id": 187,
         "name": "勇气勋章",
-        "icon": require('../images/item/item_187.png')
+        "icon": require('../images/item/item_186.png')
     },
     "188": {
         "id": 188,
@@ -1519,7 +1524,7 @@ const itemData = {
     "190": {
         "id": 190,
         "name": "纷争面纱",
-        "icon": require('../images/item/item_190.png')
+        "icon": require('../images/item/item_189.png')
     },
     "191": {
         "id": 191,
@@ -1594,7 +1599,7 @@ const itemData = {
     "205": {
         "id": 205,
         "name": "卷轴：阿托斯之棍",
-        "icon": require('../images/item/item_205.png')
+        "icon": require('../images/item/item_206.png')
     },
     "206": {
         "id": 206,
@@ -1604,7 +1609,7 @@ const itemData = {
     "207": {
         "id": 207,
         "name": "卷轴：深渊之刃",
-        "icon": require('../images/item/item_207.png')
+        "icon": require('../images/item/item_208.png')
     },
     "208": {
         "id": 208,
@@ -1619,7 +1624,7 @@ const itemData = {
     "210": {
         "id": 210,
         "name": "天堂之戟",
-        "icon": require('../images/item/item_210.png')
+        "icon": require('../images/item/item_209.png')
     },
     "211": {
         "id": 211,
@@ -1629,7 +1634,7 @@ const itemData = {
     "212": {
         "id": 212,
         "name": "天鹰之戒",
-        "icon": require('../images/item/item_212.png')
+        "icon": require('../images/item/item_211.png')
     },
     "213": {
         "id": 213,
@@ -1639,7 +1644,7 @@ const itemData = {
     "214": {
         "id": 214,
         "name": "静谧之鞋",
-        "icon": require('../images/item/item_214.png')
+        "icon": require('../images/item/item_213.png')
     },
     "215": {
         "id": 215,

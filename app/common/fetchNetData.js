@@ -1,7 +1,7 @@
 /**
  * Created by pwrd on 16/8/2.
  */
-const baseUrl = "http://127.0.0.1:3000/"
+const baseUrl = "http://192.168.1.120:3000/"
 const commonConf = {
     method: 'GET',
     headers: {
@@ -10,7 +10,7 @@ const commonConf = {
     }
 }
 
-class FetchNetData {
+export default class FetchNetData {
     static getLeagueList(maxItemdef, minItemdef, type, cb) {
         let url = `${baseUrl}league/getList?type=${type}`
         url += (maxItemdef ? "&maxItemdef=" + maxItemdef : "")
@@ -58,19 +58,3 @@ class FetchNetData {
             })
     }
 }
-//TODO  just test ...
-const fetch = require('node-fetch')
-/*FetchNetData.getLeagueList(null, null, "premium", (err, res) => {
-    console.log("err:", err, " res:", res)
-})
-FetchNetData.getMatchList(null, null, "4664", (err, res) => {
-    console.log("err:", err, " res:", res)
-})
-FetchNetData.getMatchDetail('2569610900', (err, res) => {
-    console.log("err:", err, " res:", res)
-})*/
-FetchNetData.getMatchVideo("2569610900", (err, res) => {
-    console.log("err:", err, " res:", res)
-})
-
-module.exports = FetchNetData

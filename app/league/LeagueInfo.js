@@ -28,7 +28,7 @@ export default class LeagueInfo extends React.Component {
         const ds = new ListView.DataSource({rowHasChanged: ((r1, r2) => r1 !== r2),
             sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
-        this.state = {dataSource: ds.cloneWithRowsAndSections({})}
+        this.state = {dataSource: ds.cloneWithRowsAndSections({"__s1":["__init"]})}
         this._rc = <RefreshControl
             refreshing = {false}/>
         this._originalMatch = {}
@@ -39,7 +39,7 @@ export default class LeagueInfo extends React.Component {
             if (err) {
                 //TODO 处理错误
             } else {
-                this._originalMatch = this._handlerMatchList(res)
+                this._handlerMatchList(res)
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch)
                 })
@@ -75,10 +75,13 @@ export default class LeagueInfo extends React.Component {
     }
 
     _renderRow(rowData) {
-        return <MatchBrief matchInfo={match} navigator={this.props.navigator}/>
+        if (rowData == "__init") return commonComponent.loadData(styles.loadData, 'small')
+
+        return <MatchBrief matchInfo={rowData} navigator={this.props.navigator}/>
     }
 
     _renderHeader(sectionData, sectionID) {
+        if (sectionID == "__s1") return null
         return <Text style={styles.sectionTitle}>{sectionID}</Text>
     }
 
@@ -90,7 +93,7 @@ export default class LeagueInfo extends React.Component {
             if (err) {
                 //TODO 处理错误
             } else {
-                this._handlerMatchList.call(this, res)
+                this._handlerMatchList(res)
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch)
                 })
@@ -135,5 +138,10 @@ const styles = StyleSheet.create({
         fontWeight:'600',
         padding:10,
         backgroundColor:'#e0e0e0',
+    },
+
+    loadData: {
+        marginTop:30,
     }
+
 })
