@@ -32,6 +32,7 @@ export default class MatchDetail extends React.Component {
         super(props)
 
         this.navigator = props.navigator
+        this.videoRes = null
 
         this.state = {
             matchDetail: null
@@ -43,9 +44,9 @@ export default class MatchDetail extends React.Component {
             if (err) {
                 //TODO 错误处理
             } else {
-                console.log('hi....')
+                this.videoRes = res.videoRes
                 this.setState({
-                    matchDetail: res
+                    matchDetail: res.detail
                 })
             }
         })
@@ -156,6 +157,10 @@ export default class MatchDetail extends React.Component {
     }
 
     _handleVideo() {
+        if (!this.videoRes) {
+            Alert.alert("提示", "暂无这场比赛视频")
+            return
+        }
         this.navigator.push({
             component:Video,
             matchId: this.props.matchInfo.matchId
