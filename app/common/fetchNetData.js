@@ -33,13 +33,6 @@ export default class FetchNetData {
         FetchNetData._innerFetch(url, cb)
     }
 
-    static getMatchVideo(matchId, cb) {
-        let url = `${baseUrl}match/video?matchId=${matchId}`
-
-        FetchNetData._innerFetch(url, cb)
-    }
-
-
     static _innerFetch(url, cb) {
         console.log("will fetch:", url)
         fetch(url, commonConf)
