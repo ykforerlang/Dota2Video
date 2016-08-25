@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import LeagueNavigator from './league/LeagueNavigator'
 import Search from './Search'
-import TeamRanking from './TeamRanking'
+import VideoList from './good_video/VideoList'
 
 
 export default class IndexView extends Component {
@@ -30,11 +30,11 @@ export default class IndexView extends Component {
                 comp: LeagueNavigator,
             },
             {
-                title: '发现',
+                title: '精彩推荐',
                 type: 'found',
                 iconName: "ios-eye-outline",
                 selectedIconName: "ios-eye",
-                comp: TeamRanking
+                comp: VideoList
             }, {
                 title: "我的",
                 type: "myInfo",

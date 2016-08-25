@@ -20,7 +20,7 @@ import WtTarBar from '../common/WtTarBar'
 
 
 const LeagueType = [{
-    tabLabel: "高端眼看组",
+    tabLabel: "高端/Majoy组",
     leagueType: "premium",
 }, {
     tabLabel: "职业组",

@@ -20,6 +20,7 @@ import {
 import commonStyles from '../common/commonStyle'
 import Button from '../common/Button'
 import Video from '../good_video/Video'
+import Orientation from 'react-native-orientation'
 import commonComponent from '../common/commonComponent'
 
 import FetchNetData from '../common/FetchNetData'
@@ -33,20 +34,26 @@ export default class MatchDetail extends React.Component {
 
         this.navigator = props.navigator
 
+        this.videoRes = null
         this.state = {
             matchDetail: null
         }
     }
 
+
     componentDidMount() {
+        Orientation.lockToPortrait()
+
         FetchNetData.getMatchDetail(this.props.matchInfo.matchId, (err, res) => {
             if (err) {
                 //TODO 错误处理
             } else {
                 console.log('hi....')
+                this.videoRes = res.videoRes
                 this.setState({
-                    matchDetail: res
+                    matchDetail: res.detail
                 })
+
             }
         })
     }
@@ -147,8 +154,8 @@ export default class MatchDetail extends React.Component {
                     <View style={styles.detailRight}>
                         <Text style={commonStyles.fs12}>正/反补: {playerInfo.lastHits}/{playerInfo.denies}</Text>
                         <Text style={commonStyles.fs12}>GPM/XPM: {playerInfo.gpm}/{playerInfo.xpm}</Text>
-                        <Text style={commonStyles.fs12}>对塔伤害: {playerInfo.towerDamage}({playerInfo.towerDamageRate})</Text>
-                        <Text style={commonStyles.fs12}>对英雄伤害: {playerInfo.heroDamage}({playerInfo.heroDamageRate})</Text>
+                        <Text style={commonStyles.fs12}>塔伤害: {playerInfo.towerDamage}({playerInfo.towerDamageRate})</Text>
+                        <Text style={commonStyles.fs12}>英雄伤害: {playerInfo.heroDamage}({playerInfo.heroDamageRate})</Text>
                     </View>
                 </View>
             </View>
@@ -158,7 +165,8 @@ export default class MatchDetail extends React.Component {
     _handleVideo() {
         this.navigator.push({
             component:Video,
-            matchId: this.props.matchInfo.matchId
+            matchId: this.props.matchInfo.matchId,
+            videoRes: this.videoRes
         })
     }
 
