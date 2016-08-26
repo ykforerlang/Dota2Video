@@ -29,6 +29,11 @@ export default class LeagueList extends Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
         this.state = {leagueList: ds.cloneWithRows([])}
 
+        this._rc = <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+        />
+
         this._originalArray = []
     }
 
@@ -69,6 +74,9 @@ export default class LeagueList extends Component {
                 onEndReached={this._endReached.bind(this)}
                 onEndReachedThreshold={300}
                 scrollRenderAheadDistance={500}
+
+
+
             />
         )
     }
