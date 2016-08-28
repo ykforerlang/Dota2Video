@@ -12,29 +12,43 @@ import {
 } from 'react-native';
 
 import Orientation from 'react-native-orientation'
+import commonComponent from '../common/commonComponent'
 
 const {width} = Dimensions.get('window');
 export  default class VideoList extends React.Component {
     constructor(props) {
         super(props)
 
-        const ds = new ListView.DataSource({rowHasChanged: ((r1, r2) => r1 !== r2),
+        const ds = new ListView.DataSource({
+            rowHasChanged: ((r1, r2) => r1 !== r2),
             sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
-        this.state = {dataSource: ds.cloneWithRowsAndSections({
-            "2016年8月12日":[1,2,3,4,5,6,7,8],
-            "2016年8月13日":[1,2,3,4,5,6,7, 8],
-            "2016年8月14日":[1,2,3,4,5,6,7,8,9,10],
-            "2016年8月15日":[1,2,3,4,5, 6],
-        })}
+        this.state = {dataSource: ds.cloneWithRowsAndSections({})}
+        this._rc = <RefreshControl
+            refreshing={false}/>
 
+        this._originalVideo = {}
     }
 
     componentDidMount() {
-        Orientation.unlockAllOrientations()
+
+        FetchNetData.getVideoList(null, null, (err, res) => {
+            if (err) {
+                //TODO 处理错误
+            } else {
+                this._handlerVideoList(res)
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalVideo)
+                })
+            }
+        })
     }
 
     render() {
+        if (this.state.leagueList.getRowCount() == 0) {
+            return commonComponent.loadData()
+        }
+
         return (
             <ListView
                 style={{marginTop:30,}}
@@ -46,6 +60,7 @@ export  default class VideoList extends React.Component {
                 showsVerticalScrollIndicator={true}
                 removeClippedSubviews={true}
                 onEndReachedThreshold={300}
+                onEndReached={this._endReached.bind(this)}
                 scrollRenderAheadDistance={500}
                 pageSize={2}
                 automaticallyAdjustContentInsets={false}
@@ -55,17 +70,35 @@ export  default class VideoList extends React.Component {
 
     _renderRow(rowData) {
         return (
-            <View style={styles.video}>
-                <Image source={{uri:'http://r3.ykimg.com/0542040857B01A7E6A0A4A051B9753AE'}}
-                       style={{height:80,width:140}}/>
-                <Text style={{width:140}} numberOfLines={2}>Wings vs DC Ti6 总决赛 Bo5 第四场</Text>
-            </View>
+            <TouchableHighlight onPress={(rowData) => this._renderVideo(rowData)} style={styles.thouchVideo}>
+                <View style={styles.video}>
+                    <Image source={{uri: rowData.thumb}}
+                           style={styles.thumb}/>
+                    <Text style={styles.title} numberOfLines={2}>{rowData.title}</Text>
+                </View>
+            </TouchableHighlight>
         )
     }
 
     _renderHeader(sectionData, sectionID) {
-        if (sectionID == "__s1") return null
         return <Text style={styles.sectionTitle}>{sectionID}</Text>
+    }
+
+    _endReached() {
+        //TODO
+    }
+
+    _handlerVideoList(res) {
+        for (let i = 0; i < res.length; i++) {
+            const ele = res[i]
+
+            const videoArray = this._originalVideo[ele.startDay]
+            if (videoArray) {
+                this._originalVideo[ele.startDay].push(ele)
+            } else {
+                this._originalVideo[ele.startDay] = [ele]
+            }
+        }
     }
 
 }
@@ -79,6 +112,9 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         paddingBottom:40,
+    },
+    thouchVideo: {
+        overflow: 'hidden',
     },
     video: {
         marginBottom: 10,
@@ -102,5 +138,13 @@ const styles = StyleSheet.create({
         backgroundColor:'#c0c0c0',
         marginBottom:5,
     },
+    },
+    thumb: {
+        height: 80,
+        width: 140,
+    },
+    title: {
+        width: 140,
+    }
 
 })
