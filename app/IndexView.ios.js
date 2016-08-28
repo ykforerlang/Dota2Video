@@ -13,8 +13,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import LeagueNavigator from './league/LeagueNavigator'
-import Search from './Search'
 import VideoList from './good_video/VideoList'
+import MyIndex from './my/MyIndex'
 
 
 export default class IndexView extends Component {
@@ -40,12 +40,11 @@ export default class IndexView extends Component {
                 type: "myInfo",
                 iconName: "ios-person-outline",
                 selectedIconName: "ios-person",
-                comp: Search,
+                comp: MyIndex,
             }]
     }
 
     render() {
-
         return (
             <TabBarIOS>
                 {this.itemList.map( (value) => {

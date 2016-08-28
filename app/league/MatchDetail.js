@@ -25,7 +25,7 @@ import commonComponent from '../common/commonComponent'
 import FetchNetData from '../common/FetchNetData'
 import constant, {picServerUrl} from '../common/constant'
 import dotaBaseData from '../common/dotaBaseData'
-import util from '../common/util'
+import util from '../common/Util'
 
 export default class MatchDetail extends React.Component {
     constructor(props) {
@@ -148,8 +148,8 @@ export default class MatchDetail extends React.Component {
                     <View style={styles.detailRight}>
                         <Text style={commonStyles.fs12}>正/反补: {playerInfo.lastHits}/{playerInfo.denies}</Text>
                         <Text style={commonStyles.fs12}>GPM/XPM: {playerInfo.gpm}/{playerInfo.xpm}</Text>
-                        <Text style={commonStyles.fs12}>对塔伤害: {playerInfo.towerDamage}({playerInfo.towerDamageRate})</Text>
-                        <Text style={commonStyles.fs12}>对英雄伤害: {playerInfo.heroDamage}({playerInfo.heroDamageRate})</Text>
+                        <Text style={commonStyles.fs12}>塔伤害: {playerInfo.towerDamage}({playerInfo.towerDamageRate})</Text>
+                        <Text style={commonStyles.fs12}>英雄伤害: {playerInfo.heroDamage}({playerInfo.heroDamageRate})</Text>
                     </View>
                 </View>
             </View>

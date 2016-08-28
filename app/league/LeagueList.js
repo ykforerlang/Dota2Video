@@ -27,10 +27,14 @@ export default class LeagueList extends Component {
     constructor(props) {
         super(props)
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
-        this.state = {leagueList: ds.cloneWithRows([])}
+        this.state = {leagueList: ds.cloneWithRows([]),
+            refreshing: false,
+        }
 
-        this._rc = <RefreshControl
-            refreshing = {false}/>
+        this._rc = onRefresh=<RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+        />
 
         this._originalArray = []
         this._lastCallParam = ""
@@ -58,6 +62,7 @@ export default class LeagueList extends Component {
 
         return (
             <ListView
+                contentContainerStyle={styles.content}
                 initialListSize={10}
                 dataSource={this.state.leagueList}
                 renderRow={(league) => (
@@ -99,12 +104,31 @@ export default class LeagueList extends Component {
         })
     }
 
-    _addHeaderLeagues() {
-        //TODO 下拉加载
+    _onRefresh() {
+        if (this._originalArray.length == 0) {
+            return
+        }
+        this.setState({refreshing: true});
+        const first  = this._originalArray[0]
+
+        FetchNetData.getLeagueList(null, first.itemdef, this.props.type, (err, res)=> {
+            if (err || res.length == 0) {
+                this.setState({refreshing: false});
+                return
+            }
+            this._originalArray = res.concat(this._originalArray)
+            this.setState({
+                leagueList: this.state.leagueList.cloneWithRows(this._originalArray),
+                refreshing:false,
+            })
+        })
     }
 }
 
 const styles = StyleSheet.create({
+    content: {
+        paddingBottom: 40,
+    },
     lineRoot: {
         marginTop: 5,
         overflow: 'hidden', //  配合   removeClippedSubviews

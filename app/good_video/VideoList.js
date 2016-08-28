@@ -9,10 +9,14 @@ import {
     Image,
     ListView,
     Dimensions,
+    RefreshControl,
+    TouchableHighlight,
 } from 'react-native';
 
 import Orientation from 'react-native-orientation'
 import commonComponent from '../common/commonComponent'
+import FetchNetData from '../common/FetchNetData'
+import Util from '../common/Util'
 
 const {width} = Dimensions.get('window');
 export  default class VideoList extends React.Component {
@@ -23,11 +27,22 @@ export  default class VideoList extends React.Component {
             rowHasChanged: ((r1, r2) => r1 !== r2),
             sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
-        this.state = {dataSource: ds.cloneWithRowsAndSections({})}
+        this.state = {
+            dataSource: ds.cloneWithRowsAndSections({}),
+            refreshing: false,
+        }
+
         this._rc = <RefreshControl
-            refreshing={false}/>
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+        />
+
+        this._holdSpace = <View style={styles.videoLastPlace}>
+            <Text style={styles.title}/>
+        </View>
 
         this._originalVideo = {}
+        this._lastCallParam = null
     }
 
     componentDidMount() {
@@ -36,16 +51,17 @@ export  default class VideoList extends React.Component {
             if (err) {
                 //TODO 处理错误
             } else {
-                this._handlerVideoList(res)
+                this._originalVideo = Util.handleArrayObject(res)
+                const standVideoList = VideoList.resizeEle(this._originalVideo)
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalVideo)
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(standVideoList)
                 })
             }
         })
     }
 
     render() {
-        if (this.state.leagueList.getRowCount() == 0) {
+        if (this.state.dataSource.getRowCount() == 0) {
             return commonComponent.loadData()
         }
 
@@ -53,25 +69,33 @@ export  default class VideoList extends React.Component {
             <ListView
                 style={{marginTop:30,}}
                 contentContainerStyle={styles.content}
-                initialListSize={10}
+                initialListSize={30}
                 dataSource={this.state.dataSource}
                 renderRow={this._renderRow.bind(this)}
                 renderSectionHeader={(sectionData, sectionID) => this._renderHeader(sectionData, sectionID)}
                 showsVerticalScrollIndicator={true}
                 removeClippedSubviews={true}
                 onEndReachedThreshold={300}
-                onEndReached={this._endReached.bind(this)}
                 scrollRenderAheadDistance={500}
+                onEndReached={this._endReached.bind(this)}
                 pageSize={2}
                 automaticallyAdjustContentInsets={false}
+                refreshControl = {this._rc}
             />
         )
     }
 
     _renderRow(rowData) {
+        if (rowData == "__holdSpace") {
+            return this._holdSpace
+        }
+
         return (
-            <TouchableHighlight onPress={(rowData) => this._renderVideo(rowData)} style={styles.thouchVideo}>
-                <View style={styles.video}>
+            <TouchableHighlight onPress={(rowData) => this._renderVideo(rowData)}
+                                style={styles.thouchVideo}
+                                underlayColor="#888888"
+            >
+                <View>
                     <Image source={{uri: rowData.thumb}}
                            style={styles.thumb}/>
                     <Text style={styles.title} numberOfLines={2}>{rowData.title}</Text>
@@ -84,21 +108,67 @@ export  default class VideoList extends React.Component {
         return <Text style={styles.sectionTitle}>{sectionID}</Text>
     }
 
-    _endReached() {
+    _renderVideo() {
         //TODO
     }
 
-    _handlerVideoList(res) {
-        for (let i = 0; i < res.length; i++) {
-            const ele = res[i]
+    _onRefresh() {
+        const oriKeys = Object.keys(this._originalVideo)
 
-            const videoArray = this._originalVideo[ele.startDay]
-            if (videoArray) {
-                this._originalVideo[ele.startDay].push(ele)
+        this.setState({refreshing: true});
+        const firstOri = this._originalVideo[oriKeys[0]]
+        const firstId = firstOri[0].videoId
+
+        FetchNetData.getVideoList(null, firstId, (err, res) => {
+            if (err || res.length == 0) {
+                this.setState({refreshing: false});
             } else {
-                this._originalVideo[ele.startDay] = [ele]
+                const newVideo = Util.handleArrayObject(res)
+                this._originalVideo = Util.mergeTwoArrayObject(newVideo, this._originalVideo)
+                const standVideoList = VideoList.resizeEle(this._originalVideo)
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(standVideoList),
+                    refreshing: false
+                })
+            }
+        })
+    }
+
+    _endReached() {
+        const oriKeys = Object.keys(this._originalVideo)
+        const lastOri = this._originalVideo[oriKeys[oriKeys.length - 1]]
+        const lastId = lastOri[lastOri.length - 1].videoId
+
+        if (this._lastCallParam == lastId) {
+            return
+        } else {
+            this._lastCallParam = lastId
+        }
+
+        FetchNetData.getVideoList(lastId, null, (err, res) => {
+            if (err || res.length == 0) {
+            } else {
+                const newMatch = Util.handleArrayObject(res)
+                this._originalVideo = Util.mergeTwoArrayObject(this._originalVideo, newMatch)
+
+                const standVideoList = VideoList.resizeEle(this._originalVideo)
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(standVideoList)
+                })
+            }
+        })
+    }
+
+    static resizeEle(ele) {
+        const result = {}
+        for (let key in ele) {
+            if (ele[key].length % 2 != 0) {
+                result[key] = ele[key].concat(["__holdSpace"])
+            } else {
+                result[key] = ele[key]
             }
         }
+        return result
     }
 
 }
@@ -111,33 +181,30 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         paddingLeft: 10,
         paddingRight: 10,
-        paddingBottom:40,
+        paddingBottom: 40,
     },
     thouchVideo: {
-        overflow: 'hidden',
-    },
-    video: {
         marginBottom: 10,
         marginRight: 5,
         marginLeft: 5,
-        overflow:'hidden',
-        backgroundColor:'#e0e0e0',
+        overflow: 'hidden',
+        backgroundColor: '#e0e0e0',
     },
     videoLastPlace: {
+        marginBottom: 10,
         marginRight: 5,
         marginLeft: 5,
+        overflow: 'hidden',
         opacity: 0,
-        backgroundColor:'#e0e0e0',
     },
-    sectionTitle:{
-        width:width - 20,
-        overflow:'hidden',
-        fontSize:15,
-        fontWeight:'600',
-        padding:10,
-        backgroundColor:'#c0c0c0',
-        marginBottom:5,
-    },
+    sectionTitle: {
+        width: width - 20,
+        overflow: 'hidden',
+        fontSize: 15,
+        fontWeight: '600',
+        padding: 10,
+        backgroundColor: '#c0c0c0',
+        marginBottom: 5,
     },
     thumb: {
         height: 80,
