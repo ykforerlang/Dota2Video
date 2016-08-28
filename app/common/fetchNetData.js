@@ -1,7 +1,7 @@
 /**
  * Created by pwrd on 16/8/2.
  */
-const baseUrl = "http://127.0.0.1:3000/"
+const baseUrl = "http://192.168.1.120:3000/"
 const commonConf = {
     method: 'GET',
     headers: {
@@ -61,10 +61,3 @@ class FetchNetData {
     }
 }
 module.exports = FetchNetData
-
-
-//TODO test....
-const fetch = require('node-fetch')
-FetchNetData.getVideoList(null, null,(err, res) => {
-    console.log(res)
-})

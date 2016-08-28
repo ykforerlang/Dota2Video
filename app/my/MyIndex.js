@@ -22,11 +22,11 @@ import {picServerUrl} from '../common/constant'
 export default class MyIndex extends Component {
 
     render() {
-        const icon = `${picServerUrl}login.jpg`
+        const icon = require("../images/login.jpg")
 
         return (
             <View style={styles.content}>
-                <Image source={{uri:icon}}
+                <Image source={icon}
                        style={styles.icon}
                 />
                 <Button value="登陆/注册"
