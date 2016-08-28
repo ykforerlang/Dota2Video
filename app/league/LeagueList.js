@@ -29,7 +29,11 @@ export default class LeagueList extends Component {
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
         this.state = {leagueList: ds.cloneWithRows([])}
 
+        this._rc = <RefreshControl
+            refreshing = {false}/>
+
         this._originalArray = []
+        this._lastCallParam = ""
     }
 
     componentDidMount() {
@@ -69,6 +73,7 @@ export default class LeagueList extends Component {
                 onEndReached={this._endReached.bind(this)}
                 onEndReachedThreshold={300}
                 scrollRenderAheadDistance={500}
+                refreshControl = {this._rc}
             />
         )
     }
@@ -79,6 +84,12 @@ export default class LeagueList extends Component {
 
     _endReached() {
         const last  = this._originalArray[this._originalArray.length - 1]
+        if (last.itemdef == this._lastCallParam) {
+            return // 防止重复提交
+        } else {
+            this._lastCallParam = last.itemdef
+        }
+
         FetchNetData.getLeagueList(last.itemdef, null, this.props.type, (err, res)=> {
             if (err) return
             this._originalArray = this._originalArray.concat(res)

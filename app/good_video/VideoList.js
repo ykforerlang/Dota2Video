@@ -13,11 +13,20 @@ import {
 
 import Orientation from 'react-native-orientation'
 
+const {width} = Dimensions.get('window');
 export  default class VideoList extends React.Component {
     constructor(props) {
         super(props)
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
-        this.state = {dataSource: ds.cloneWithRows([1,2,3,4,5,6,7,8,9,10,11,12,13,14])}
+
+        const ds = new ListView.DataSource({rowHasChanged: ((r1, r2) => r1 !== r2),
+            sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
+        })
+        this.state = {dataSource: ds.cloneWithRowsAndSections({
+            "2016年8月12日":[1,2,3,4,5,6,7,8],
+            "2016年8月13日":[1,2,3,4,5,6,7, 8],
+            "2016年8月14日":[1,2,3,4,5,6,7,8,9,10],
+            "2016年8月15日":[1,2,3,4,5, 6],
+        })}
 
     }
 
@@ -28,15 +37,18 @@ export  default class VideoList extends React.Component {
     render() {
         return (
             <ListView
+                style={{marginTop:30,}}
                 contentContainerStyle={styles.content}
                 initialListSize={10}
                 dataSource={this.state.dataSource}
                 renderRow={this._renderRow.bind(this)}
+                renderSectionHeader={(sectionData, sectionID) => this._renderHeader(sectionData, sectionID)}
                 showsVerticalScrollIndicator={true}
                 removeClippedSubviews={true}
                 onEndReachedThreshold={300}
                 scrollRenderAheadDistance={500}
                 pageSize={2}
+                automaticallyAdjustContentInsets={false}
             />
         )
     }
@@ -51,6 +63,11 @@ export  default class VideoList extends React.Component {
         )
     }
 
+    _renderHeader(sectionData, sectionID) {
+        if (sectionID == "__s1") return null
+        return <Text style={styles.sectionTitle}>{sectionID}</Text>
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -58,21 +75,32 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         alignItems: 'flex-start',
-        justifyContent: 'center',
+        justifyContent: 'space-around',
         paddingLeft: 10,
         paddingRight: 10,
+        paddingBottom:40,
     },
     video: {
-        marginTop: 10,
         marginBottom: 10,
         marginRight: 5,
         marginLeft: 5,
         overflow:'hidden',
+        backgroundColor:'#e0e0e0',
     },
     videoLastPlace: {
         marginRight: 5,
         marginLeft: 5,
         opacity: 0,
-    }
+        backgroundColor:'#e0e0e0',
+    },
+    sectionTitle:{
+        width:width - 20,
+        overflow:'hidden',
+        fontSize:15,
+        fontWeight:'600',
+        padding:10,
+        backgroundColor:'#c0c0c0',
+        marginBottom:5,
+    },
 
 })

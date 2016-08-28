@@ -32,6 +32,8 @@ export default class LeagueInfo extends React.Component {
         this._rc = <RefreshControl
             refreshing = {false}/>
         this._originalMatch = {}
+
+        this._lastCallParam = null
     }
 
     componentDidMount() {
@@ -89,6 +91,13 @@ export default class LeagueInfo extends React.Component {
         const oriKeys = Object.keys(this._originalMatch)
         const lastOri = this._originalMatch[oriKeys[oriKeys.length - 1]]
         const lastId = lastOri[lastOri.length - 1].matchId
+
+        if (this._lastCallParam == lastId) {
+            return
+        } else {
+            this._lastCallParam = lastId
+        }
+
         FetchNetData.getMatchList(lastId, null, this.props.league.leagueid, (err, res) => {
             if (err) {
                 //TODO 处理错误
