@@ -153,7 +153,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#d0d0d0',
         marginTop:2,
         padding:10,
-        marginBottom:2,
         fontStyle:'italic',
     },
 
@@ -163,6 +162,7 @@ const styles = StyleSheet.create({
         fontWeight:'600',
         padding:10,
         backgroundColor:'#e0e0e0',
+        marginTop:5,
     },
 
     loadData: {
