@@ -10,44 +10,37 @@ import {
     Dimensions,
 } from 'react-native';
 
-import Orientation from 'react-native-orientation'
-
-import commonComponent from '../common/commonComponent'
-import FetchNetData from '../common/FetchNetData'
+import {apiUrl} from '../common/constant'
 
 const {height, width} = Dimensions.get('window');
-export default class Video extends  Component {
+export default class Video extends Component {
     constructor(props) {
         super(props)
-
-        this.matchId = props.matchId
-        this.htmlRes = `<html><body>${props.videoRes}</body></html>`
+        this.videoId = props.videoId
     }
 
     render() {
-
         return (
-            <View style={styles.content}>
-                <WebView source={{html:this.htmlRes}}
-                         scalesPageToFit={true}
-                         style={styles.htmlContent}
-                />
-            </View>
+            <WebView
+                style={styles.content}
+                javaScriptEnabled={true}
+                scalesPageToFit={true}
+                source={{
+                        uri: `${apiUrl}video.html?videoId=${this.videoId}&width=${width}&height=${height}`,
+                  }}
+                automaticallyAdjustContentInsets={false}
+                domStorageEnabled={true}
+                decelerationRate="normal"
+                startInLoadingState={true}
+            >
+            </WebView>
         )
     }
 }
 
 const styles = StyleSheet.create({
     content: {
-        paddingBottom:40,
-        paddingRight:5,
-        paddingLeft:5,
-        width: width - 10,
-        height: (width - 10) * 4 / 3,
+        padding:10,
+        flex:1,
     },
-    htmlContent: {
-        width:300,
-        height:200,
-    }
-
 })

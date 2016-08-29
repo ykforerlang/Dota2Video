@@ -3,5 +3,6 @@
  */
 
 module.exports = {
-    picServerUrl:'http://192.168.1.120:3000/images/'
+    picServerUrl:'http://192.168.1.120:3000/images/',
+    apiUrl:'http://192.168.1.120:3000/'
 }
