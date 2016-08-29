@@ -16,6 +16,7 @@ import {
 
 import commonStyles from '../common/commonStyle'
 import commonComponent from '../common/commonComponent'
+import Util from '../common/Util'
 
 import LeagueBrief from './LeagueBrief'
 import MatchBrief from './MatchBrief'
@@ -28,10 +29,18 @@ export default class LeagueInfo extends React.Component {
         const ds = new ListView.DataSource({rowHasChanged: ((r1, r2) => r1 !== r2),
             sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
-        this.state = {dataSource: ds.cloneWithRowsAndSections({"__s1":["__init"]})}
-        this._rc = <RefreshControl
-            refreshing = {false}/>
+        this.state = {dataSource: ds.cloneWithRowsAndSections({"__s1":["__init"]}),
+            refreshing:false
+        }
+
+        this._rc = onRefresh=<RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this._onRefresh.bind(this)}
+        />
+
         this._originalMatch = {}
+
+        this._lastCallParam = null
     }
 
     componentDidMount() {
@@ -39,7 +48,7 @@ export default class LeagueInfo extends React.Component {
             if (err) {
                 //TODO 处理错误
             } else {
-                this._handlerMatchList(res)
+                this._originalMatch = Util.handleArrayObject(res)
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch)
                 })
@@ -85,33 +94,49 @@ export default class LeagueInfo extends React.Component {
         return <Text style={styles.sectionTitle}>{sectionID}</Text>
     }
 
-    _endReached() {
+    _onRefresh() {
+        const oriKeys = Object.keys(this._originalMatch)
+        if (oriKeys[0] == "__s1") return
+
+        this.setState({refreshing: true});
+        const firstOri = this._originalMatch[oriKeys[0]]
+        const firstId = firstOri[0].matchId
+
+        FetchNetData.getMatchList(null, firstId, this.props.league.leagueid, (err, res) => {
+            if (err || res.length == 0) {
+                this.setState({refreshing: false});
+            } else {
+                const newMatch = Util.handleArrayObject(res)
+                this._originalMatch = Util.mergeTwoArrayObject(newMatch, this._originalMatch)
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch),
+                    refreshing:false
+                })
+            }
+        })
+    }
+    _endReached(){
         const oriKeys = Object.keys(this._originalMatch)
         const lastOri = this._originalMatch[oriKeys[oriKeys.length - 1]]
         const lastId = lastOri[lastOri.length - 1].matchId
+
+        if (this._lastCallParam == lastId) {
+            return
+        } else {
+            this._lastCallParam = lastId
+        }
+
         FetchNetData.getMatchList(lastId, null, this.props.league.leagueid, (err, res) => {
             if (err) {
                 //TODO 处理错误
             } else {
-                this._handlerMatchList(res)
+                const newMatch = Util.handleArrayObject(res)
+                this._originalMatch = Util.mergeTwoArrayObject(this._originalMatch, newMatch)
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch)
                 })
             }
         })
-    }
-
-    _handlerMatchList(res) {
-        for (let i = 0; i < res.length; i++) {
-            const ele = res[i]
-
-            const matchArray = this._originalMatch[ele.startDay]
-            if (matchArray) {
-                this._originalMatch[ele.startDay].push(ele)
-            } else {
-                this._originalMatch[ele.startDay] = [ele]
-            }
-        }
     }
 }
 
