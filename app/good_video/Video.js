@@ -20,13 +20,15 @@ export default class Video extends Component {
     }
 
     render() {
+        const webHeight = height - 64 - 40 // header and footer
+        const webWidth = width - 10 - 10 //padding left and right
+
         return (
             <WebView
                 style={styles.content}
                 javaScriptEnabled={true}
-                scalesPageToFit={true}
                 source={{
-                        uri: `${apiUrl}video.html?videoId=${this.videoId}&width=${width}&height=${height}`,
+                        uri: `${apiUrl}video/ykPage?videoId=${this.videoId}&width=${width}&height=${webHeight}`,
                   }}
                 automaticallyAdjustContentInsets={false}
                 domStorageEnabled={true}
@@ -40,7 +42,6 @@ export default class Video extends Component {
 
 const styles = StyleSheet.create({
     content: {
-        padding:10,
         flex:1,
     },
 })
