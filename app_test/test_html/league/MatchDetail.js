@@ -39,24 +39,24 @@ class MatchDetail extends React.Component {
             <View style={styles.playerRow}>
                 <View style={styles.playerBrief}>
                     <View style={styles.player}>
-                        <Image source={require("../../../app/images/player/514364.jpg")}/>
-                        <Text style={commonStyles.fs13}>天穹守望者</Text>
+                        <Image source={require("player.jpg")}/>
+                        <Text style={commonStyles.fs13}>xxxdd</Text>
                     </View>
                     <View style={styles.hero}>
-                        <Image source={require("../../../app/images/hero/hero_1.png")}/>
+                        <Image source={require("../../../app/images/hero/hero_1.png")} style={styles.heroIcon}/>
                         <Text style={commonStyles.fs13}>天穹守望者</Text>
                     </View>
                     <View style={styles.items}>
                         <View style={commonStyles.flexRow}>
-                            <Image source={require("../../../app/images/item/item_1.png")}/>
-                            <Image source={require("../../../app/images/item/item_2.png")}/>
-                            <Image source={require("../../../app/images/item/item_3.png")}/>
+                            <Image source={require("../../../app/images/item/item_1.png")} style={styles.itemIcon}/>
+                            <Image source={require("../../../app/images/item/item_2.png")} style={styles.itemIcon}/>
+                            <Image source={require("../../../app/images/item/item_3.png")} style={styles.itemIcon}/>
                         </View>
 
                         <View style={commonStyles.flexRow}>
-                            <Image source={require("../../../app/images/item/item_4.png")}/>
-                            <Image source={require("../../../app/images/item/item_5.png")}/>
-                            <Image source={require("../../../app/images/item/item_6.png")}/>
+                            <Image source={require("../../../app/images/item/item_4.png")} style={styles.itemIcon}/>
+                            <Image source={require("../../../app/images/item/item_5.png")} style={styles.itemIcon}/>
+                            <Image source={require("../../../app/images/item/item_6.png")} style={styles.itemIcon}/>
                         </View>
                     </View>
                 </View>
@@ -165,6 +165,15 @@ const styles = StyleSheet.create({
         borderLeftWidth: 1,
         borderLeftColor: '#D3D3D3',
         borderLeftStyle: 'solid',
+    },
+
+    itemIcon: {
+        width:35,
+        height:20,
+    },
+    heroIcon: {
+        width:30,
+        height:40,
     },
 })
 

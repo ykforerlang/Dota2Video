@@ -18,22 +18,22 @@ class MatchBrief extends Component {
                 <View style={styles.team}>
                     <View style={commonStyles.flexRow}>
                         <Text style={styles.teamNameRed}>LGD:</Text>
-                        <View style={styles.heroIcon}>
-                            <Image source={require("../../../app/images/hero/" + heroes[0] +".png")}/>
-                            <Image source={require("../../../app/images/hero/" + heroes[1] +".png")}/>
-                            <Image source={require("../../../app/images/hero/" + heroes[2] +".png")}/>
-                            <Image source={require("../../../app/images/hero/" + heroes[3] +".png")}/>
-                            <Image source={require("../../../app/images/hero/" + heroes[4] +".png")}/>
+                        <View style={styles.hero}>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[0] +".png")}  style={styles.heroIcon}/>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[1] +".png")}  style={styles.heroIcon}/>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[2] +".png")}  style={styles.heroIcon}/>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[3] +".png")}  style={styles.heroIcon}/>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[4] +".png")}  style={styles.heroIcon}/>
                         </View>
                     </View>
                     <View style={commonStyles.flexRow}>
                         <Text style={styles.teamNameBlue}>EHOME:</Text>
-                        <View style={styles.heroIcon}>
-                            <Image source={require("../../../app/images/hero/" + heroes[5] +".png")}/>
-                            <Image source={require("../../../app/images/hero/" + heroes[6] +".png")}/>
-                            <Image source={require("../../../app/images/hero/" + heroes[7] +".png")}/>
-                            <Image source={require("../../../app/images/hero/" + heroes[8] +".png")}/>
-                            <Image source={require("../../../app/images/hero/" + heroes[9] +".png")}/>
+                        <View style={styles.hero}>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[5] +".png")}  style={styles.heroIcon}/>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[6] +".png")}  style={styles.heroIcon}/>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[7] +".png")}  style={styles.heroIcon}/>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[8] +".png")}  style={styles.heroIcon}/>
+                            <Image source={require("../../../app/images/hero/hero_" + heroes[9] +".png")}  style={styles.heroIcon}/>
                         </View>
                     </View>
                 </View>
@@ -58,7 +58,11 @@ const styles = StyleSheet.create({
     team: {paddingTop: 5},
     teamNameRed: {fontSize: 12, fontStyle: 'italic', flex: 1, color: 'red'},
     teamNameBlue: {fontSize: 12, fontStyle: 'italic', flex: 1, color: 'blue'},
-    heroIcon: {flexDirection: 'row', flex: 1,}
+    hero: {flexDirection: 'row', flex: 1,},
+    heroIcon: {
+        width:32,
+        height:24,
+    },
 
 })
 const commonStyles = StyleSheet.create({

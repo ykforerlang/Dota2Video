@@ -10,7 +10,7 @@ class LeagueAll extends React.Component {
                 <View style={styles.brief}>
                     <View>
                         <Text style={styles.tag}>免费</Text>
-                        <Image source={require("../../../app/images/league/2129.jpg")}></Image>
+                        <Image source={require("TI6.png")} style={styles.leagueIcon}></Image>
                     </View>
                     <View style={styles.desAndPrice}>
                         <Text style={styles.pricePool}>奖金:1000000$</Text>
@@ -29,9 +29,9 @@ class LeagueAll extends React.Component {
 
                         <View style={styles.seriesTeam}>
                             <Text style={[styles.teamText,{textAlign:'right'}]}>EHOME</Text>
-                            <Image source={require("../../../app/images/team/1105664.jpg")} style={styles.teamIcon}/>
+                            <Image source={require("Ehome.jpg")} style={styles.teamIcon}/>
                             <Text style={styles.vs}>VS</Text>
-                            <Image source={require("../../../app/images/team/1951061.jpg")} style={styles.teamIcon}/>
+                            <Image source={require("Lgd.jpg")} style={styles.teamIcon}/>
                             <Text style={styles.teamText}>LGD</Text>
                         </View>
 
@@ -47,19 +47,19 @@ class LeagueAll extends React.Component {
                         <View style={{paddingTop:5}}>
                             <View style={{flexDirection:'row'}}>
                                 <Text style={{color:'red', fontSize:12, width:80}}>LGD:</Text>
-                                <Image source={require("../../../app/images/hero/10.png")}/>
-                                <Image source={require("../../../app/images/hero/11.png")}/>
-                                <Image source={require("../../../app/images/hero/12.png")}/>
-                                <Image source={require("../../../app/images/hero/13.png")}/>
-                                <Image source={require("../../../app/images/hero/14.png")}/>
+                                <Image source={require("../../../app/images/hero/hero_10.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_11.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_12.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_13.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_14.png")} style={styles.heroIcon}/>
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <Text style={{color:'blue', fontSize:12, width:80}}>EHOME:</Text>
-                                <Image source={require("../../../app/images/hero/15.png")}/>
-                                <Image source={require("../../../app/images/hero/16.png")}/>
-                                <Image source={require("../../../app/images/hero/17.png")}/>
-                                <Image source={require("../../../app/images/hero/18.png")}/>
-                                <Image source={require("../../../app/images/hero/19.png")}/>
+                                <Image source={require("../../../app/images/hero/hero_15.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_16.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_17.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_18.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_19.png")} style={styles.heroIcon}/>
                             </View>
                         </View>
                     </View>
@@ -71,19 +71,19 @@ class LeagueAll extends React.Component {
                         <View style={{paddingTop:5}}>
                             <View style={{flexDirection:'row'}}>
                                 <Text style={{color:'red', fontSize:12, width:80}}>LGD:</Text>
-                                <Image source={require("../../../app/images/hero/10.png")}/>
-                                <Image source={require("../../../app/images/hero/11.png")}/>
-                                <Image source={require("../../../app/images/hero/12.png")}/>
-                                <Image source={require("../../../app/images/hero/13.png")}/>
-                                <Image source={require("../../../app/images/hero/14.png")}/>
+                                <Image source={require("../../../app/images/hero/hero_10.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_11.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_12.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_13.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_14.png")} style={styles.heroIcon}/>
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <Text style={{color:'blue', fontSize:12, width:80}}>EHOME:</Text>
-                                <Image source={require("../../../app/images/hero/15.png")}/>
-                                <Image source={require("../../../app/images/hero/16.png")}/>
-                                <Image source={require("../../../app/images/hero/17.png")}/>
-                                <Image source={require("../../../app/images/hero/18.png")}/>
-                                <Image source={require("../../../app/images/hero/19.png")}/>
+                                <Image source={require("../../../app/images/hero/hero_15.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_16.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_17.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_18.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_19.png")} style={styles.heroIcon}/>
                             </View>
                         </View>
                     </View>
@@ -95,19 +95,19 @@ class LeagueAll extends React.Component {
                         <View style={{paddingTop:5}}>
                             <View style={{flexDirection:'row'}}>
                                 <Text style={{color:'red', fontSize:12, width:80}}>LGD:</Text>
-                                <Image source={require("../../../app/images/hero/10.png")}/>
-                                <Image source={require("../../../app/images/hero/11.png")}/>
-                                <Image source={require("../../../app/images/hero/12.png")}/>
-                                <Image source={require("../../../app/images/hero/13.png")}/>
-                                <Image source={require("../../../app/images/hero/14.png")}/>
+                                <Image source={require("../../../app/images/hero/hero_10.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_11.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_12.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_13.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_14.png")} style={styles.heroIcon}/>
                             </View>
                             <View style={{flexDirection:'row'}}>
                                 <Text style={{color:'blue', fontSize:12, width:80}}>EHOME:</Text>
-                                <Image source={require("../../../app/images/hero/15.png")}/>
-                                <Image source={require("../../../app/images/hero/16.png")}/>
-                                <Image source={require("../../../app/images/hero/17.png")}/>
-                                <Image source={require("../../../app/images/hero/18.png")}/>
-                                <Image source={require("../../../app/images/hero/19.png")}/>
+                                <Image source={require("../../../app/images/hero/hero_15.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_16.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_17.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_18.png")} style={styles.heroIcon}/>
+                                <Image source={require("../../../app/images/hero/hero_19.png")} style={styles.heroIcon}/>
                             </View>
                         </View>
                     </View>
@@ -185,6 +185,14 @@ const styles = StyleSheet.create({
     teamIcon: {
         width:32,
         height:24,
+    },
+    heroIcon: {
+        width:32,
+        height:24,
+    },
+    leagueIcon: {
+        width:80,
+        height:53,
     },
 
     vs: {

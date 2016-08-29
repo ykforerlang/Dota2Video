@@ -7,13 +7,13 @@ class LeagueSeries extends Component {
     render() {
         return (
             <View style={styles.seriesBrief}>
-                <Text style={styles.seriesTime}>2014/12/01 24时</Text>
+                <Text style={styles.seriesTime}>2014/12/01 24</Text>
                 <View style={styles.seriesTeam}>
-                    <Text style={[styles.teamText,{textAlign:'right'}]}>EHOMEsfdsfsff</Text>
-                    <Image source={require("../../../app/images/team/1105664.jpg")} style={styles.teamIcon}/>
+                    <Text style={[styles.teamText,{textAlign:'right'}]}>LGD</Text>
+                    <Image source={require("Lgd.jpg")} style={styles.teamIcon}/>
                     <Text style={styles.vs}>VS</Text>
-                    <Image source={require("../../../app/images/team/1951061.jpg")} style={styles.teamIcon}/>
-                    <Text style={styles.teamText}>EHOMEsfdsfsff</Text>
+                    <Image source={require("Ehome.jpg")} style={styles.teamIcon}/>
+                    <Text style={styles.teamText}>EHOME</Text>
                 </View>
                 <Text style={styles.type}>BO5</Text>
             </View>

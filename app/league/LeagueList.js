@@ -74,9 +74,6 @@ export default class LeagueList extends Component {
                 onEndReached={this._endReached.bind(this)}
                 onEndReachedThreshold={300}
                 scrollRenderAheadDistance={500}
-
-
-
             />
         )
     }

@@ -9,7 +9,7 @@ class League extends React.Component {
             <View style={styles.brief}>
                 <View>
                     <Text style={styles.tag}>免费</Text>
-                    <Image source={require("../../../app/images/league/2129.jpg")}></Image>
+                    <Image source={require("TI6.png")} style={styles.leagueIcon}></Image>
                 </View>
                 <View style={styles.desAndPrice}>
                     <View style={styles.nameAndPp}>
@@ -61,7 +61,11 @@ const styles = StyleSheet.create({
         fontSize:12,
         overflow:'hidden',
         height:14,
-    }
+    },
+    leagueIcon: {
+        width:80,
+        height:53,
+    },
 })
 
 ReactDOM.render(
