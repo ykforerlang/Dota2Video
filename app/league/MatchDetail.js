@@ -32,7 +32,7 @@ export default class MatchDetail extends React.Component {
         super(props)
 
         this.navigator = props.navigator
-        this.videoRes = null
+        this.videoId = null
 
         this.state = {
             matchDetail: null
@@ -44,7 +44,7 @@ export default class MatchDetail extends React.Component {
             if (err) {
                 //TODO 错误处理
             } else {
-                this.videoRes = res.videoRes
+                this.videoId = res.videoId
                 this.setState({
                     matchDetail: res.detail
                 })
@@ -68,7 +68,6 @@ export default class MatchDetail extends React.Component {
             playerDetail = playerDetail.concat(playerList.slice(5).map((ele, index) => {
                 return this._renderRow(ele, index + 5)
             }))
-            console.log("hi....44")
 
             playerDetail.push(<View style={styles.holdSpace} key="holdSpace"></View>)
             console.log(this.state.matchDetail)
@@ -157,13 +156,13 @@ export default class MatchDetail extends React.Component {
     }
 
     _handleVideo() {
-        if (!this.videoRes) {
+        if (!this.videoId) {
             Alert.alert("提示", "暂无这场比赛视频")
             return
         }
         this.navigator.push({
             component:Video,
-            matchId: this.props.matchInfo.matchId
+            videoId: this.videoId
         })
     }
 

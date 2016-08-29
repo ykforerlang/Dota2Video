@@ -13,7 +13,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import LeagueNavigator from './league/LeagueNavigator'
-import VideoList from './good_video/VideoList'
+import VideoListNavigator from './good_video/VideoListNavigator'
 import MyIndex from './my/MyIndex'
 
 
@@ -34,7 +34,7 @@ export default class IndexView extends Component {
                 type: 'found',
                 iconName: "ios-eye-outline",
                 selectedIconName: "ios-eye",
-                comp: VideoList
+                comp: VideoListNavigator,
             }, {
                 title: "我的",
                 type: "myInfo",

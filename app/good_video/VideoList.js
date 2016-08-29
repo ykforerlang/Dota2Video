@@ -14,6 +14,8 @@ import {
 } from 'react-native';
 
 import Orientation from 'react-native-orientation'
+import Video from './Video'
+
 import commonComponent from '../common/commonComponent'
 import FetchNetData from '../common/FetchNetData'
 import Util from '../common/Util'
@@ -40,6 +42,8 @@ export  default class VideoList extends React.Component {
         this._holdSpace = <View style={styles.videoLastPlace}>
             <Text style={styles.title}/>
         </View>
+
+        this.navigator = props.navigator
 
         this._originalVideo = {}
         this._lastCallParam = null
@@ -108,8 +112,11 @@ export  default class VideoList extends React.Component {
         return <Text style={styles.sectionTitle}>{sectionID}</Text>
     }
 
-    _renderVideo() {
-        //TODO
+    _renderVideo(rowData) {
+        this.navigator.push({
+            component:Video,
+            videoId: rowData.videoId
+        })
     }
 
     _onRefresh() {
