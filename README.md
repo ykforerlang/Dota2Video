@@ -1,6 +1,6 @@
 Dota2Video
 =====
-Dota2赛事视频， Dota2精彩视频推荐， 
+Dota2赛事视频， Dota2精彩视频推荐，（ 多屏幕适配）
 
 ###启动服务端
 app服务端为<a href='https://github.com/ykforerlang/Dota2Video'>Dota2VideoServer</a>。 本地启动需要启动这个web服务
