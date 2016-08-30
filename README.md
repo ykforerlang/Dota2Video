@@ -7,7 +7,7 @@ app服务端为<a href='https://github.com/ykforerlang/Dota2Video'>Dota2VideoSer
 并且修改 app/common/FetchNetData 和app/common/constant的ip，
 
 
-##效果演示
+##部分效果演示
 ####底部tarbar和顶部tar切换
 <a href="https://github.com/ykforerlang/Dota2Video/blob/master/demo_images/v1.gif"><img src="https://github.com/ykforerlang/Dota2Video/blob/master/demo_images/v1.gif"></a>
 <br>
