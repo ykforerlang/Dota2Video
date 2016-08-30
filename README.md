@@ -9,10 +9,9 @@ app服务端为<a href='https://github.com/ykforerlang/Dota2Video'>Dota2VideoSer
 ##屏幕适配
 app_test/test_html 可以参考目录下的做法在chrome里面调整好样式，再去模拟器上调试 比如：<br/>
 ####iphone5s
-<img src=''/>
+<img src='https://github.com/ykforerlang/Dota2Video/blob/master/demo_images/5.png'/>
 ####iphone6
-<img src=''/>
-####iphone6plus
+<img src='https://github.com/ykforerlang/Dota2Video/blob/master/demo_images/6.png'/>
 
 
 ##部分效果演示
