@@ -2,9 +2,16 @@ Dota2Video
 =====
 Dota2赛事视频， Dota2精彩视频推荐，（ 多屏幕适配）
 
-###启动服务端
+##启动服务端
 app服务端为<a href='https://github.com/ykforerlang/Dota2Video'>Dota2VideoServer</a>。 本地启动需要启动这个web服务
 并且修改 app/common/FetchNetData 和app/common/constant的ip，
+
+##屏幕适配
+app_test/test_html 可以参考目录下的做法在chrome里面调整好样式，（ console里输入changePhone 来修改尺寸），再去模拟器上调试 比如：<br/>
+####iphone5s
+<img src='https://github.com/ykforerlang/Dota2Video/blob/master/demo_images/5.png'/>
+####iphone6
+<img src='https://github.com/ykforerlang/Dota2Video/blob/master/demo_images/6.png'/>
 
 
 ##部分效果演示
