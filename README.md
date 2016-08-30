@@ -33,18 +33,6 @@ app服务端为<a href='https://github.com/ykforerlang/Dota2Video'>Dota2VideoSer
 2. ios 首屏： https://github.com/facebook/react-native/issues/1281<br/>
           http://bbs.reactnative.cn/topic/1850/react-native-ios-%E8%AE%BE%E7%BD%AE-launchscreen  <br/>    
            appicon: http://blog.it985.com/8048.html
-3. react某些问题 not rn: <p>The reason is because components are wrappers for DOM elements.
-     What does it even mean to listen for an event on a component?
-     Once your component gets unwrapped into DOM elements, does the outer HTML element act as the thing you are listening for the event on?
-     Is it some other element?
-     How do you distinguish between listening for an event and declaring a prop you are listening for?
-     (onClick as defined here is simply a property of that component.)
-     There is no clear answer to any of those questions.
-     It's too harsh to say that the solution is to simply not listen to events on components either.
-     Fortunately, there is a workaround where we treat the event handler as a prop and pass it on to the component.
-     Inside the component,
-     we can then assign the event to a DOM element and set the event handler to the the value of the prop we just passed in.
-     I realize that probably makes no sense, so let's walk through an example.</p>
 
 ##TODO
 1. add android support
