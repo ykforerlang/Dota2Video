@@ -95,7 +95,7 @@ export  default class VideoList extends React.Component {
         }
 
         return (
-            <TouchableHighlight onPress={(rowData) => this._renderVideo(rowData)}
+            <TouchableHighlight onPress={() => this._renderVideo(rowData)}
                                 style={styles.thouchVideo}
                                 underlayColor="#888888"
             >

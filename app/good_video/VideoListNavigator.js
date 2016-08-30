@@ -10,7 +10,7 @@ import {
     Dimensions,
 } from 'react-native';
 
-import LeagueScrollView from './VideoList'
+import VideoList from './VideoList'
 import FirstNoBarNavigator from '../common/FirstNoBarNavigator'
 
 export default class VideoListNavigator extends Component {
