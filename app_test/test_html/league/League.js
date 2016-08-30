@@ -6,17 +6,58 @@ class League extends React.Component {
 
     render() {
         return (
-            <View style={styles.brief}>
-                <View>
-                    <Text style={styles.tag}>免费</Text>
-                    <Image source={require("TI6.png")} style={styles.leagueIcon}></Image>
-                </View>
-                <View style={styles.desAndPrice}>
-                    <View style={styles.nameAndPp}>
-                        <Text style={styles.name}>第6届国际邀请赛第6届国际邀请赛第6届国际邀请赛</Text>
-                        <Text style={styles.pricePool}>奖金:1000000$</Text>
+            <View>
+                <View style={styles.brief}>
+                    <View>
+                        <Text style={styles.tag}>免费</Text>
+                        <Image source={require("TI6.png")} style={styles.leagueIcon}></Image>
                     </View>
-                    <Text numberOfLines={3} style={styles.description}>{description}</Text>
+                    <View style={styles.desAndPrice}>
+                        <View style={styles.nameAndPp}>
+                            <Text style={styles.name}>第6届国际邀请赛第6届国际邀请赛第6届国际邀请赛</Text>
+                            <Text style={styles.pricePool}>奖金:1000000$</Text>
+                        </View>
+                        <Text numberOfLines={3} style={styles.description}>{description}</Text>
+                    </View>
+                </View>
+                <View style={styles.brief}>
+                    <View>
+                        <Text style={styles.tag}>免费</Text>
+                        <Image source={require("TI6.png")} style={styles.leagueIcon}></Image>
+                    </View>
+                    <View style={styles.desAndPrice}>
+                        <View style={styles.nameAndPp}>
+                            <Text style={styles.name}>第6届国际邀请赛第6届国际邀请赛第6届国际邀请赛</Text>
+                            <Text style={styles.pricePool}>奖金:1000000$</Text>
+                        </View>
+                        <Text numberOfLines={3} style={styles.description}>{description}</Text>
+                    </View>
+                </View>
+                <View style={styles.brief}>
+                    <View>
+                        <Text style={styles.tag}>免费</Text>
+                        <Image source={require("TI6.png")} style={styles.leagueIcon}></Image>
+                    </View>
+                    <View style={styles.desAndPrice}>
+                        <View style={styles.nameAndPp}>
+                            <Text style={styles.name}>第6届国际邀请赛第6届国际邀请赛第6届国际邀请赛</Text>
+                            <Text style={styles.pricePool}>奖金:1000000$</Text>
+                        </View>
+                        <Text numberOfLines={3} style={styles.description}>{description}</Text>
+                    </View>
+                </View>
+                <View style={styles.brief}>
+                    <View>
+                        <Text style={styles.tag}>免费</Text>
+                        <Image source={require("TI6.png")} style={styles.leagueIcon}></Image>
+                    </View>
+                    <View style={styles.desAndPrice}>
+                        <View style={styles.nameAndPp}>
+                            <Text style={styles.name}>第6届国际邀请赛第6届国际邀请赛第6届国际邀请赛</Text>
+                            <Text style={styles.pricePool}>奖金:1000000$</Text>
+                        </View>
+                        <Text numberOfLines={3} style={styles.description}>{description}</Text>
+                    </View>
                 </View>
             </View>
         )
@@ -28,6 +69,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 10,
+        marginBottom:10,
     },
     tag: {
         position: 'absolute',
@@ -43,28 +85,28 @@ const styles = StyleSheet.create({
     description: {
         overflow: 'hidden',
         fontSize: 11,
-        color:'grey',
-        height:39,
+        color: 'grey',
+        height: 39,
     },
     pricePool: {
-        flex:1,
+        flex: 1,
         fontSize: 11,
         color: '#CD853F',
         fontStyle: 'italic',
         textAlign: 'right',
     },
     nameAndPp: {
-        flexDirection:'row',
+        flexDirection: 'row',
     },
     name: {
-        flex:1,
-        fontSize:12,
-        overflow:'hidden',
-        height:14,
+        flex: 1,
+        fontSize: 12,
+        overflow: 'hidden',
+        height: 14,
     },
     leagueIcon: {
-        width:80,
-        height:53,
+        width: 80,
+        height: 53,
     },
 })
 

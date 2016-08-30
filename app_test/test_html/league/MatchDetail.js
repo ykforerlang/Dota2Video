@@ -9,7 +9,7 @@ class MatchDetail extends React.Component {
         return (
             <View style={styles.content}>
                 {this._title()}
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(() => {
+                {[1, 2, 3,].map(() => {
                     return this._renderRow()
                 })}
             </View>
