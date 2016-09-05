@@ -42,6 +42,7 @@ app_test/test_html 可以参考目录下的做法在chrome里面调整好样式�
            appicon: http://blog.it985.com/8048.html
 
 ##TODO
+0. redux 实现离线情况下的部分功能使用 
 1. add android support
 2. Animation 实现dota2 replay的动画
 3. login/sign
