@@ -10,12 +10,12 @@ import {
   AppRegistry,
 } from 'react-native';
 
-import IndexView from './app/IndexView.ios.js'
+import IndexNavigator from './app/IndexNavigator'
 
 class Dota2Video extends Component {
   render() {
     return (
-      <IndexView/>
+      <IndexNavigator/>
     );
   }
 }

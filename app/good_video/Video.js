@@ -28,7 +28,7 @@ export default class Video extends Component {
                 style={styles.content}
                 javaScriptEnabled={true}
                 source={{
-                        uri: `${apiUrl}video/ykPage?videoId=${this.videoId}&width=${width}&height=${webHeight}`,
+                        uri: `${apiUrl}video/ykPage?videoId=${this.videoId}&width=${webWidth}&height=${webHeight}`,
                   }}
                 automaticallyAdjustContentInsets={false}
                 domStorageEnabled={true}

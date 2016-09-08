@@ -26,39 +26,30 @@ import FetchNetData from '../common/FetchNetData'
 import constant, {picServerUrl} from '../common/constant'
 import dotaBaseData from '../common/dotaBaseData'
 import util from '../common/Util'
+import matchDetailAction from '../actions/matchDetail'
 
-export default class MatchDetail extends React.Component {
+class MatchDetail extends React.Component {
     constructor(props) {
         super(props)
 
         this.navigator = props.navigator
-        this.videoId = null
-
-        this.state = {
-            matchDetail: null
-        }
     }
 
     componentDidMount() {
-        FetchNetData.getMatchDetail(this.props.matchInfo.matchId, (err, res) => {
-            if (err) {
-                //TODO 错误处理
-            } else {
-                this.videoId = res.videoId
-                this.setState({
-                    matchDetail: res.detail
-                })
-            }
-        })
+        const {actions, matchInfo, matchDetail} = this.props
+        if (!matchDetail) {
+            actions.initReq(matchInfo.matchDetail)
+        }
     }
 
     render() {
+        const {matchDetail} = this.props
         let playerDetail = null
-        if (!this.state.matchDetail) {
+        if (!matchDetail) {
             playerDetail = commonComponent.loadData(styles.loadData, 'small')
         } else {
             console.log("....before players")
-            const playerList = this.state.matchDetail.players
+            const playerList = matchDetail.players
 
             playerDetail = [<Text style={styles.campName} key="radiant">天辉</Text>]
             playerDetail = playerDetail.concat(playerList.slice(0, 5).map((ele, index) => {
@@ -70,9 +61,7 @@ export default class MatchDetail extends React.Component {
             }))
 
             playerDetail.push(<View style={styles.holdSpace} key="holdSpace"></View>)
-            console.log(this.state.matchDetail)
         }
-        console.log(this.state.matchDetail)
 
         return (
             <ScrollView>
@@ -84,8 +73,9 @@ export default class MatchDetail extends React.Component {
     }
 
     _title() {
+        const {matchDetail} = this.props
         const {matchId, radiantTeam, direTeam} = this.props.matchInfo
-        const matchDetail = this.state.matchDetail
+        const matchDetail = matchDetail
 
         return (
             <View style={styles.title}>
@@ -106,11 +96,9 @@ export default class MatchDetail extends React.Component {
     }
 
     _renderRow(playerInfo, index) {
-        console.log("index:", index)
         const heroId = this.props.matchInfo.heroes[index]
         const heroInfo = dotaBaseData.getHeroData(heroId)
         const itemList = playerInfo.itemList
-        console.log(heroId, heroInfo, itemList, playerInfo)
         return (
             <View style={styles.playerRow} key={index}>
                 <View style={styles.playerBrief}>
@@ -156,7 +144,9 @@ export default class MatchDetail extends React.Component {
     }
 
     _handleVideo() {
-        if (!this.videoId) {
+        const {matchDetail} = this.props
+
+        if (!matchDetail.videoId) {
             Alert.alert("提示", "暂无这场比赛视频")
             return
         }
@@ -284,3 +274,10 @@ const styles = StyleSheet.create({
 
 
 })
+
+export default Util.ReduxComponent((state, ownProps) => {
+    const matchDetail = state.matchDetail[ownProps.matchInfo.matchId]
+    return {
+        matchDetail
+    }
+}, matchDetailAction, MatchDetail)

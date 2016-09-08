@@ -17,64 +17,46 @@ import Orientation from 'react-native-orientation'
 import Video from './Video'
 
 import commonComponent from '../common/commonComponent'
-import FetchNetData from '../common/FetchNetData'
 import Util from '../common/Util'
+import goodVideoAction from '../actions/goodVideo'
 
 const {width} = Dimensions.get('window');
-export  default class VideoList extends React.Component {
+class VideoList extends React.Component {
     constructor(props) {
         super(props)
 
-        const ds = new ListView.DataSource({
+        this._ds = new ListView.DataSource({
             rowHasChanged: ((r1, r2) => r1 !== r2),
             sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
-        this.state = {
-            dataSource: ds.cloneWithRowsAndSections({}),
-            refreshing: false,
-        }
-
-        this._rc = <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh.bind(this)}
-        />
 
         this._holdSpace = <View style={styles.videoLastPlace}>
             <Text style={styles.title}/>
         </View>
 
         this.navigator = props.navigator
-
-        this._originalVideo = {}
-        this._lastCallParam = null
     }
 
     componentDidMount() {
-
-        FetchNetData.getVideoList(null, null, (err, res) => {
-            if (err) {
-                //TODO 处理错误
-            } else {
-                this._originalVideo = Util.handleArrayObject(res)
-                const standVideoList = VideoList.resizeEle(this._originalVideo)
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(standVideoList)
-                })
-            }
-        })
+        const {actions, init} = this.props
+        if (!init) {
+            actions.initReq()
+        }
     }
 
+
     render() {
-        if (this.state.dataSource.getRowCount() == 0) {
+        const {init, pullRefreshing, items} = this.props
+
+        if (!init) {
             return commonComponent.loadData()
         }
-
         return (
             <ListView
                 style={{marginTop:30,}}
                 contentContainerStyle={styles.content}
                 initialListSize={30}
-                dataSource={this.state.dataSource}
+                dataSource={this._ds.cloneWithRowsAndSections(items)}
                 renderRow={this._renderRow.bind(this)}
                 renderSectionHeader={(sectionData, sectionID) => this._renderHeader(sectionData, sectionID)}
                 showsVerticalScrollIndicator={true}
@@ -84,7 +66,12 @@ export  default class VideoList extends React.Component {
                 onEndReached={this._endReached.bind(this)}
                 pageSize={2}
                 automaticallyAdjustContentInsets={false}
-                refreshControl = {this._rc}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={pullRefreshing}
+                        onRefresh={this._onRefresh.bind(this)}
+                    />
+                }
             />
         )
     }
@@ -114,56 +101,19 @@ export  default class VideoList extends React.Component {
 
     _renderVideo(rowData) {
         this.navigator.push({
-            component:Video,
+            component: Video,
             videoId: rowData.videoId
         })
     }
 
     _onRefresh() {
-        const oriKeys = Object.keys(this._originalVideo)
-
-        this.setState({refreshing: true});
-        const firstOri = this._originalVideo[oriKeys[0]]
-        const firstId = firstOri[0].videoId
-
-        FetchNetData.getVideoList(null, firstId, (err, res) => {
-            if (err || res.length == 0) {
-                this.setState({refreshing: false});
-            } else {
-                const newVideo = Util.handleArrayObject(res)
-                this._originalVideo = Util.mergeTwoArrayObject(newVideo, this._originalVideo)
-                const standVideoList = VideoList.resizeEle(this._originalVideo)
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(standVideoList),
-                    refreshing: false
-                })
-            }
-        })
+        const {actions} = this.props
+        actions.pullReq()
     }
 
     _endReached() {
-        const oriKeys = Object.keys(this._originalVideo)
-        const lastOri = this._originalVideo[oriKeys[oriKeys.length - 1]]
-        const lastId = lastOri[lastOri.length - 1].videoId
-
-        if (this._lastCallParam == lastId) {
-            return
-        } else {
-            this._lastCallParam = lastId
-        }
-
-        FetchNetData.getVideoList(lastId, null, (err, res) => {
-            if (err || res.length == 0) {
-            } else {
-                const newMatch = Util.handleArrayObject(res)
-                this._originalVideo = Util.mergeTwoArrayObject(this._originalVideo, newMatch)
-
-                const standVideoList = VideoList.resizeEle(this._originalVideo)
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(standVideoList)
-                })
-            }
-        })
+        const {actions} = this.props
+        actions.scrollDownReq()
     }
 
     static resizeEle(ele) {
@@ -222,3 +172,19 @@ const styles = StyleSheet.create({
     }
 
 })
+
+export default Util.ReduxComponent(state =>  {
+    if (!state) {
+        return {
+            init: false,
+            pullRefreshing: false,
+            items: null
+        }
+    } else {
+        return {
+            init: true,
+            pullRefreshing:state.goodVideo.pullRefreshing,
+            items:VideoList.resizeEle(state.goodVideo.items),
+        }
+    }
+}, goodVideoAction, VideoList)

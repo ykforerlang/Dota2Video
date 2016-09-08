@@ -10,7 +10,11 @@
     "react-native": "^0.30.0",
     "react-native-orientation": "^1.17.0",
     "react-native-scrollable-tab-view": "^0.5.3",
-    "react-native-vector-icons": "^2.0.3"
+    "react-native-vector-icons": "^2.0.3",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.6.1",
+    "redux-thunk": "^2.1.0"
   },
   "devDependencies": {
     "node-fetch": "^1.6.0"

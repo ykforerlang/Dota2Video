@@ -20,43 +20,28 @@ import Orientation from 'react-native-orientation'
 import LeagueBrief from './LeagueBrief'
 import LeagueInfo from './LeagueInfo'
 
-import FetchNetData from '../common/FetchNetData'
 import commonComponent from '../common/commonComponent'
+import Util from '../common/util'
+import leagueListAction from '../actions/leagueList'
 
-export default class LeagueList extends Component {
+class LeagueList extends Component {
     constructor(props) {
         super(props)
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
-        this.state = {leagueList: ds.cloneWithRows([]),
-            refreshing: false,
-        }
-
-        this._rc = onRefresh=<RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh.bind(this)}
-        />
-
-        this._originalArray = []
-        this._lastCallParam = ""
+        this._ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
     }
 
     componentDidMount() {
         Orientation.lockToPortrait()
-
-        FetchNetData.getLeagueList(null, null, this.props.type, (err, res) => {
-            if (err) {
-               //TODO 显示加载失败
-            } else {
-                this._originalArray = this._originalArray.concat(res)
-                this.setState({
-                    leagueList: this.state.leagueList.cloneWithRows(this._originalArray)
-                })
-            }
-        })
+        const {actions, type, init} = this.props
+        if (!init) {
+            actions.initReq(type)
+        }
     }
 
     render() {
-        if (this.state.leagueList.getRowCount() == 0) {
+        const {init, pullRefreshing, items} = this.props
+
+        if (!init) {
             return commonComponent.loadData()
         }
 
@@ -64,7 +49,7 @@ export default class LeagueList extends Component {
             <ListView
                 contentContainerStyle={styles.content}
                 initialListSize={10}
-                dataSource={this.state.leagueList}
+                dataSource={this._ds.cloneWithRows(items)}
                 renderRow={(league) => (
                     <TouchableHighlight underlayColor="#888888"
                                 onPress={() => this._renderLeagueDetail(league)}
@@ -78,50 +63,32 @@ export default class LeagueList extends Component {
                 onEndReached={this._endReached.bind(this)}
                 onEndReachedThreshold={300}
                 scrollRenderAheadDistance={500}
-                refreshControl = {this._rc}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={pullRefreshing}
+                        onRefresh={this._onRefresh.bind(this)}
+                    />
+                }
             />
         )
     }
 
     _renderLeagueDetail(league) {
-        this.props.navigator.push({league: league, component: LeagueInfo, naviTitle: league.name, naviBack: '赛事'})
+        this.props.navigator.push({
+            league: league,
+            component: LeagueInfo,
+            naviTitle: league.name,
+            naviBack: '赛事'})
     }
 
     _endReached() {
-        const last  = this._originalArray[this._originalArray.length - 1]
-        if (last.itemdef == this._lastCallParam) {
-            return // 防止重复提交
-        } else {
-            this._lastCallParam = last.itemdef
-        }
-
-        FetchNetData.getLeagueList(last.itemdef, null, this.props.type, (err, res)=> {
-            if (err) return
-            this._originalArray = this._originalArray.concat(res)
-            this.setState({
-                leagueList: this.state.leagueList.cloneWithRows(this._originalArray)
-            })
-        })
+        const {actions, type} = this.props
+        actions.scrollDownReq(type)
     }
 
     _onRefresh() {
-        if (this._originalArray.length == 0) {
-            return
-        }
-        this.setState({refreshing: true});
-        const first  = this._originalArray[0]
-
-        FetchNetData.getLeagueList(null, first.itemdef, this.props.type, (err, res)=> {
-            if (err || res.length == 0) {
-                this.setState({refreshing: false});
-                return
-            }
-            this._originalArray = res.concat(this._originalArray)
-            this.setState({
-                leagueList: this.state.leagueList.cloneWithRows(this._originalArray),
-                refreshing:false,
-            })
-        })
+        const {actions, type} = this.props
+        actions.pullReq(type)
     }
 }
 
@@ -138,3 +105,22 @@ const styles = StyleSheet.create({
     },
 
 })
+
+
+export default Util.ReduxComponent((state, ownProps) => {
+    const typeLeagues = state.leagueList[ownProps.type]
+    if (!typeLeagues) {
+        return {
+            init: true,
+            pullRefreshing: false,
+            items: null,
+        }
+    } else {
+        return {
+            init: true,
+            pullRefreshing: typeLeagues.pullRefreshing,
+            items: typeLeagues.items
+        }
+    }
+
+}, leagueListAction, LeagueList)

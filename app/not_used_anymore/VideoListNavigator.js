@@ -1,5 +1,5 @@
 /**
- * Created by pwrd on 16/7/20.
+ * Created by yk on 2016/8/29.
  */
 import React, {Component} from 'react';
 import {
@@ -10,18 +10,18 @@ import {
     Dimensions,
 } from 'react-native';
 
-import LeagueScrollView from './LeagueScrollView'
+import VideoList from './../good_video/VideoList'
 import FirstNoBarNavigator from '../common/FirstNoBarNavigator'
 
-export default class LeagueNavigator extends Component {
+export default class VideoListNavigator extends Component {
 
     render() {
         return (
             <FirstNoBarNavigator
-                initialRoute={{component:LeagueScrollView}}
+                initialRoute={{component:VideoList}}
                 renderScene={(route, navigator) =>{
                      let Component = route.component;
-                     return <Component {...route} navigator={navigator}  />
+                     return <Component {...route} navigator={navigator}/>
                 }}
                 barStyle={styles.naviBar}
             />

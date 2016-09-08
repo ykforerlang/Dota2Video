@@ -33,6 +33,7 @@ class FetchNetData {
         FetchNetData._innerFetch(url, cb)
     }
 
+    // 请求 的video  id必须大于minId， 小于maxId
     static getVideoList(maxId, minId, cb) {
         let url = `${baseUrl}video/list`
         url += (maxId ? "?maxId=" + maxId : "")

@@ -21,55 +21,45 @@ import Util from '../common/Util'
 import LeagueBrief from './LeagueBrief'
 import MatchBrief from './MatchBrief'
 
-import FetchNetData from '../common/FetchNetData'
+import matchListActin from '../actions/matchList'
 
-export default class LeagueInfo extends React.Component {
+class LeagueInfo extends React.Component {
     constructor(props) {
         super(props)
-        const ds = new ListView.DataSource({rowHasChanged: ((r1, r2) => r1 !== r2),
+        this._ds = new ListView.DataSource({rowHasChanged: ((r1, r2) => r1 !== r2),
             sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
-        this.state = {dataSource: ds.cloneWithRowsAndSections({"__s1":["__init"]}),
-            refreshing:false
-        }
-
-        this._rc = onRefresh=<RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this._onRefresh.bind(this)}
-        />
-
-        this._originalMatch = {}
-
-        this._lastCallParam = null
     }
 
     componentDidMount() {
-        FetchNetData.getMatchList(null, null, this.props.league.leagueid, (err, res) => {
-            if (err) {
-                //TODO 处理错误
-            } else {
-                this._originalMatch = Util.handleArrayObject(res)
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch)
-                })
-            }
-        })
+        const {actions, league, init} = this.props
+        if (!init) {
+            actions.initReq(league.leagueId)
+        }
     }
 
     render() {
+        const {init, pullRefreshing, items} = this.props
+        const dsItems = init ? items : {"__s1":["__init"]}
+
         return (
             <ListView
                 initialListSize={10}
-                dataSource={this.state.dataSource}
+                dataSource={this._ds.cloneWithRowsAndSections(dsItems)}
                 renderRow={(sub) => this._renderRow(sub)}
                 renderSectionHeader={(sectionData, sectionID) => this._renderHeader(sectionData, sectionID)}
                 showsVerticalScrollIndicator={true}
                 removeClippedSubviews={true}
                 renderHeader ={this._header.bind(this)}
-                refreshControl = {this._rc}
                 onEndReached={this._endReached.bind(this)}
                 onEndReachedThreshold={300}
                 scrollRenderAheadDistance={600}
+                refreshControl = {
+                    <RefreshControl
+                        refreshing={pullRefreshing}
+                        onRefresh={this._onRefresh.bind(this)}
+                    />
+                }
             />
         )
     }
@@ -95,48 +85,14 @@ export default class LeagueInfo extends React.Component {
     }
 
     _onRefresh() {
-        const oriKeys = Object.keys(this._originalMatch)
-        if (oriKeys[0] == "__s1") return
-
-        this.setState({refreshing: true});
-        const firstOri = this._originalMatch[oriKeys[0]]
-        const firstId = firstOri[0].matchId
-
-        FetchNetData.getMatchList(null, firstId, this.props.league.leagueid, (err, res) => {
-            if (err || res.length == 0) {
-                this.setState({refreshing: false});
-            } else {
-                const newMatch = Util.handleArrayObject(res)
-                this._originalMatch = Util.mergeTwoArrayObject(newMatch, this._originalMatch)
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch),
-                    refreshing:false
-                })
-            }
-        })
+        const {actions, league, init} = this.props
+        if(!init) return
+        actions.fetchPullReq(league.leagueId)
     }
     _endReached(){
-        const oriKeys = Object.keys(this._originalMatch)
-        const lastOri = this._originalMatch[oriKeys[oriKeys.length - 1]]
-        const lastId = lastOri[lastOri.length - 1].matchId
-
-        if (this._lastCallParam == lastId) {
-            return
-        } else {
-            this._lastCallParam = lastId
-        }
-
-        FetchNetData.getMatchList(lastId, null, this.props.league.leagueid, (err, res) => {
-            if (err) {
-                //TODO 处理错误
-            } else {
-                const newMatch = Util.handleArrayObject(res)
-                this._originalMatch = Util.mergeTwoArrayObject(this._originalMatch, newMatch)
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRowsAndSections(this._originalMatch)
-                })
-            }
-        })
+        const {actions, league, init} = this.props
+        if(!init) return
+        actions.scrollDownReq(league.leagueId)
     }
 }
 
@@ -170,3 +126,20 @@ const styles = StyleSheet.create({
     }
 
 })
+
+export default Util.ReduxComponent((state, ownProps) => {
+    const leagueMatchList = state.matchList[ownProps.league.leagueId + ""]
+    if (!leagueMatchList) {
+        return {
+            init:false,
+            pullRefreshing:false,
+            items:null,
+        }
+    } else {
+        return {
+            init: true,
+            pullRefreshing: leagueMatchList.pullRefreshing,
+            items: leagueMatchList.items
+        }
+    }
+}, matchListActin, LeagueInfo)

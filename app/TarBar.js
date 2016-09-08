@@ -12,8 +12,8 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import LeagueNavigator from './league/LeagueNavigator'
-import VideoListNavigator from './good_video/VideoListNavigator'
+import LeagueScrollView from './league/LeagueScrollView'
+import VideoList from './good_video/VideoList'
 import MyIndex from './my/MyIndex'
 
 
@@ -27,14 +27,14 @@ export default class IndexView extends Component {
                 type: 'league',
                 iconName: "ios-trophy-outline",
                 selectedIconName: "ios-trophy",
-                comp: LeagueNavigator,
+                comp: LeagueScrollView,
             },
             {
                 title: '精彩推荐',
                 type: 'found',
                 iconName: "ios-eye-outline",
                 selectedIconName: "ios-eye",
-                comp: VideoListNavigator,
+                comp: VideoList,
             }, {
                 title: "我的",
                 type: "myInfo",
