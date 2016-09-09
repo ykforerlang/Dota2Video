@@ -14,7 +14,9 @@ export  default function matchList(state, action) {
         case ML_INIT_SUC:
             newObj = {
                 lastTime: new Date().getTime(),
-                items:Util.handleArrayObject(action.res)
+                items:Util.handleArrayObject(action.res),
+                lastFetchingScrollDownId: null,
+                pullRefreshing:false
             }
             break;
         case ML_SCROLL_DOWN_REQ:

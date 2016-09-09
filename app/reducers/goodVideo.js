@@ -4,18 +4,15 @@
 import Util from '../common/util'
 import {GV_INIT_SUC,GV_PULL_REQ, GV_PULL_SUC, GV_FETCH_PULL_REQ, GV_FETCH_PULL_SUC, GV_FETCH_SCROLL_DOWN_REQ, GV_FETCH_SCROLL_DOWN_SUC, GV_SCROLL_DOWN_REQ, GV_SCROLL_DOWN_SUC} from '../common/ActionConstant'
 
-export  default function goodVideo(state ={
-    init:false,
-    lastTime:0,
-    lastFetchingScrollDownId: null,
-    pullRefreshing:false,
-    items:null,
-}, action) {
+export  default function goodVideo(state, action) {
     switch(action.type) {
         case GV_INIT_SUC:
-            return {...state,
+            return {
                 lastTime: new Date().getTime(),
-                items:Util.handleArrayObject(action.res)}
+                items:Util.handleArrayObject(action.res),
+                lastFetchingScrollDownId: null,
+                pullRefreshing:false
+            }
         case GV_SCROLL_DOWN_REQ:
             return {
                 ...state,

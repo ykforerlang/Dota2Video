@@ -174,7 +174,8 @@ const styles = StyleSheet.create({
 })
 
 export default Util.ReduxComponent(state =>  {
-    if (!state) {
+    const goodVideo = state.goodVideo
+    if (!goodVideo) {
         return {
             init: false,
             pullRefreshing: false,
@@ -183,8 +184,8 @@ export default Util.ReduxComponent(state =>  {
     } else {
         return {
             init: true,
-            pullRefreshing:state.goodVideo.pullRefreshing,
-            items:VideoList.resizeEle(state.goodVideo.items),
+            pullRefreshing:goodVideo.pullRefreshing,
+            items:VideoList.resizeEle(goodVideo.items),
         }
     }
 }, goodVideoAction, VideoList)

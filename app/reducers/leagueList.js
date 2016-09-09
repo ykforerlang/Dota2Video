@@ -14,7 +14,9 @@ export  default function leagueList(state, action) {
         case LL_INIT_SUC:
             newObj = {
                 lastTime: new Date().getTime(),
-                items:res
+                items:res,
+                lastFetchingScrollDownId: null,
+                pullRefreshing:false
             }
             break;
         case LL_SCROLL_DOWN_REQ:
