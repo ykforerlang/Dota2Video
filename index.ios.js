@@ -1,6 +1,5 @@
 /**
- * Sample React Native App
- * we are dotaother not max
+ * we are dotavideo not max
  * https://github.com/facebook/react-native
  * @flow
  */
