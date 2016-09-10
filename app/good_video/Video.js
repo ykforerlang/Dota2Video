@@ -21,7 +21,7 @@ export default class Video extends Component {
 
     render() {
         const webHeight = height - 64 - 40 // header and footer
-        const webWidth = width - 10 - 10 //padding left and right
+        const webWidth = width //padding left and right
 
         return (
             <WebView

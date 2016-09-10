@@ -151,7 +151,7 @@ class MatchDetail extends React.Component {
         }
         this.navigator.push({
             component:Video,
-            videoId: this.videoId
+            videoId: matchDetail.videoId
         })
     }
 
