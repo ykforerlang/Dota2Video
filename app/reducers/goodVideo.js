@@ -4,7 +4,9 @@
 import Util from '../common/util'
 import {GV_INIT_SUC,GV_PULL_REQ, GV_PULL_SUC, GV_FETCH_PULL_REQ, GV_FETCH_PULL_SUC, GV_FETCH_SCROLL_DOWN_REQ, GV_FETCH_SCROLL_DOWN_SUC, GV_SCROLL_DOWN_REQ, GV_SCROLL_DOWN_SUC} from '../common/ActionConstant'
 
-export  default function goodVideo(state, action) {
+export  default function goodVideo(state = null, action) {
+    let newMatch= null
+    let newVL = null
     switch(action.type) {
         case GV_INIT_SUC:
             return {
@@ -19,12 +21,19 @@ export  default function goodVideo(state, action) {
                 lastFetchingScrollDownId: action.lastId,
             }
         case GV_SCROLL_DOWN_SUC:
-            const newMatch = Util.handleArrayObject(action.res)
-            const newVL = Util.mergeTwoArrayObject(state.items, newMatch)
-            return {
-                ...state,
-                lastTime: new Date().getTime(),
-                items:newVL
+            if (action.res.length == 0) {
+                return {
+                    ...state,
+                    lastTime: new Date().getTime(),
+                }
+            } else {
+                newMatch = Util.handleArrayObject(action.res)
+                newVL = Util.mergeTwoArrayObject(state.items, newMatch)
+                return {
+                    ...state,
+                    lastTime: new Date().getTime(),
+                    items:newVL
+                }
             }
         case GV_PULL_REQ:
             return {
@@ -32,13 +41,21 @@ export  default function goodVideo(state, action) {
                 pullRefreshing:true,
             }
         case GV_PULL_SUC:
-            const newVideo = Util.handleArrayObject(action.res)
-            const newVL = Util.mergeTwoArrayObject(newVideo, state.items)
-            return {
-                ...state,
-                lastTime: new Date().getTime(),
-                items:newVL,
-                pullRefreshing:false,
+            if (action.res.length == 0) {
+                return {
+                    ...state,
+                    lastTime: new Date().getTime(),
+                    pullRefreshing:false,
+                }
+            } else {
+                newMatch = Util.handleArrayObject(action.res)
+                newVL = Util.mergeTwoArrayObject(newMatch, state.items)
+                return {
+                    ...state,
+                    lastTime: new Date().getTime(),
+                    items:newVL,
+                    pullRefreshing:false,
+                }
             }
         default:
             return state

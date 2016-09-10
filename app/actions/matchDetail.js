@@ -5,7 +5,7 @@ import FetchNetData from '../common/FetchNetData'
 import {MD_INIT_SUC} from '../common/ActionConstant'
 
 
-export default initReq = (matchId) => (dispatch) => {
+export const initReq = (matchId) => (dispatch) => {
 
     FetchNetData.getMatchDetail(matchId, (err, res) => {
         if (err) {
@@ -16,4 +16,4 @@ export default initReq = (matchId) => (dispatch) => {
     })
 }
 
-export default initSuc = (matchId, res) => ({type:MD_INIT_SUC, matchId, res})
+export const initSuc = (matchId, res) => ({type:MD_INIT_SUC, matchId, res})

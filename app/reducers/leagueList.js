@@ -5,7 +5,9 @@
 import Util from '../common/util'
 import {LL_INIT_SUC,LL_PULL_REQ, LL_PULL_SUC, LL_FETCH_PULL_REQ, LL_FETCH_PULL_SUC, LL_FETCH_SCROLL_DOWN_REQ, LL_FETCH_SCROLL_DOWN_SUC, LL_SCROLL_DOWN_REQ, LL_SCROLL_DOWN_SUC} from '../common/ActionConstant'
 
-export  default function leagueList(state, action) {
+export  default function leagueList(state ={}, action) {
+    if (!action.leagueType) return state
+
     const typeStr = action.leagueType
     const oldObj = state[typeStr]
 
@@ -14,7 +16,7 @@ export  default function leagueList(state, action) {
         case LL_INIT_SUC:
             newObj = {
                 lastTime: new Date().getTime(),
-                items:res,
+                items:action.res,
                 lastFetchingScrollDownId: null,
                 pullRefreshing:false
             }
@@ -25,9 +27,15 @@ export  default function leagueList(state, action) {
             }
             break;
         case LL_SCROLL_DOWN_SUC:
-            newObj =  {
-                lastTime: new Date().getTime(),
-                items: oldObj.items.concat(res)
+            if (action.res.length == 0) {
+                newObj = {
+                    lastTime: new Date().getTime(),
+                }
+            } else {
+                newObj =  {
+                    lastTime: new Date().getTime(),
+                    items: oldObj.items.concat(action.res)
+                }
             }
             break;
         case LL_PULL_REQ:
@@ -36,10 +44,17 @@ export  default function leagueList(state, action) {
             }
             break;
         case LL_PULL_SUC:
-            newObj = {
-                lastTime: new Date().getTime(),
-                items:res.concat(oldObj.items),
-                pullRefreshing:false,
+            if (action.res.length == 0) {
+                newObj = {
+                    lastTime: new Date().getTime(),
+                    pullRefreshing:false,
+                }
+            } else {
+                newObj = {
+                    lastTime: new Date().getTime(),
+                    items:action.res.concat(oldObj.items),
+                    pullRefreshing:false,
+                }
             }
             break;
     }
@@ -48,7 +63,7 @@ export  default function leagueList(state, action) {
         return state
     } else {
         const tmp = {}
-        tmp[typeStr] = newObj
+        tmp[typeStr] = {...oldObj, ...newObj}
         return {...state, ...tmp}
     }
 }

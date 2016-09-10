@@ -1,6 +1,9 @@
 /**
  * Created by yk on 2016/9/8.
  */
+
+import { combineReducers } from 'redux'
+
 import goodVideo from './goodVideo'
 import leagueList from './leagueList'
 import matchList from './matchList'

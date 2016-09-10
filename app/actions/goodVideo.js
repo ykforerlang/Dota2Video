@@ -9,17 +9,15 @@ export const initReq = () => (dispatch) => {
         if (err) {
             //TODO error handler
         } else {
-            if (res.length != 0) {
-                dispatch(initSuc(res))
-            }
+            dispatch(initSuc(res))
         }
     })
 }
 
 export const initSuc = (res)=> ({type: GV_INIT_SUC, res})
 
-export const pullReq = ()=> ({type:GV_PULL_REQ})
-export const pullSuc = (res)=> ({type:GV_PULL_SUC, res})
+export const pullReq = ()=> ({type: GV_PULL_REQ})
+export const pullSuc = (res)=> ({type: GV_PULL_SUC, res})
 export const fetchPullReq = () => (dispatch, stateF) => {
     const firstId = _getVideoFirstId(stateF)
     dispatch(pullReq())
@@ -28,9 +26,7 @@ export const fetchPullReq = () => (dispatch, stateF) => {
         if (err) {
             //TODO error handler
         } else {
-            if (res.length != 0) {
-               dispatch(pullSuc(res))
-            }
+            dispatch(pullSuc(res))
         }
     })
 }
@@ -39,7 +35,7 @@ export const scrollDownReq = (lastId) => ({type: GV_SCROLL_DOWN_REQ, lastId})
 export const scrollDownSuc = (res) =>({type: GV_SCROLL_DOWN_SUC, res})
 
 export const fetchScrollDownReq = () => (dispatch, stateF) => {
-    const {lastId, lastFetchingScrollDownId}  = _getVideoLastId(stateF())
+    const {lastId, lastFetchingScrollDownId}  = _getVideoLastId(stateF)
     if (lastId != lastFetchingScrollDownId) {
         dispatch(scrollDownReq(lastId))
 
@@ -47,9 +43,7 @@ export const fetchScrollDownReq = () => (dispatch, stateF) => {
             if (err) {
                 //TODO error handler
             } else {
-                if (res.length != 0) {
-                    dispatch(scrollDownSuc(res))
-                }
+                dispatch(scrollDownSuc(res))
             }
         })
     } else {

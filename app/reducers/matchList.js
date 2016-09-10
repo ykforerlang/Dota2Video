@@ -5,11 +5,14 @@
 import Util from '../common/util'
 import {ML_INIT_SUC,ML_PULL_REQ, ML_PULL_SUC, ML_FETCH_PULL_REQ, ML_FETCH_PULL_SUC, ML_FETCH_SCROLL_DOWN_REQ, ML_FETCH_SCROLL_DOWN_SUC, ML_SCROLL_DOWN_REQ, ML_SCROLL_DOWN_SUC} from '../common/ActionConstant'
 
-export  default function matchList(state, action) {
+export  default function matchList(state = {}, action) {
+    if (!action.leagueId) return state
+
     const typeStr = action.leagueId + ""
     const oldObj = state[typeStr]
 
     let newObj = null;
+    let newMatch = null;
     switch(action.type) {
         case ML_INIT_SUC:
             newObj = {
@@ -25,10 +28,16 @@ export  default function matchList(state, action) {
             }
             break;
         case ML_SCROLL_DOWN_SUC:
-            const newMatch = Util.handleArrayObject(action.res)
-            newObj =  {
-                lastTime: new Date().getTime(),
-                items: Util.mergeTwoArrayObject(oldObj.items, newMatch)
+            if (action.res.length == 0) {
+                newObj =  {
+                    lastTime: new Date().getTime(),
+                }
+            } else {
+                newMatch = Util.handleArrayObject(action.res)
+                newObj =  {
+                    lastTime: new Date().getTime(),
+                    items: Util.mergeTwoArrayObject(oldObj.items, newMatch)
+                }
             }
             break;
         case ML_PULL_REQ:
@@ -37,11 +46,18 @@ export  default function matchList(state, action) {
             }
             break;
         case ML_PULL_SUC:
-            const newMatch = Util.handleArrayObject(action.res)
-            newObj = {
-                lastTime: new Date().getTime(),
-                items:Util.mergeTwoArrayObject(newMatch, oldObj.items),
-                pullRefreshing:false,
+            if (action.res.length == 0) {
+                newObj = {
+                    lastTime: new Date().getTime(),
+                    pullRefreshing:false,
+                }
+            } else {
+                newMatch = Util.handleArrayObject(action.res)
+                newObj = {
+                    lastTime: new Date().getTime(),
+                    items:Util.mergeTwoArrayObject(newMatch, oldObj.items),
+                    pullRefreshing:false,
+                }
             }
             break;
     }
@@ -50,7 +66,7 @@ export  default function matchList(state, action) {
         return state
     } else {
         const tmp = {}
-        tmp[typeStr] = newObj
+        tmp[typeStr] = {...oldObj, ...newObj}
         return {...state, ...tmp}
     }
 }

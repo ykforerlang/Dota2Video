@@ -25,8 +25,8 @@ import commonComponent from '../common/commonComponent'
 import FetchNetData from '../common/FetchNetData'
 import constant, {picServerUrl} from '../common/constant'
 import dotaBaseData from '../common/dotaBaseData'
-import util from '../common/Util'
-import matchDetailAction from '../actions/matchDetail'
+import Util from '../common/util'
+import * as matchDetailAction from '../actions/matchDetail'
 
 class MatchDetail extends React.Component {
     constructor(props) {
@@ -38,7 +38,7 @@ class MatchDetail extends React.Component {
     componentDidMount() {
         const {actions, matchInfo, matchDetail} = this.props
         if (!matchDetail) {
-            actions.initReq(matchInfo.matchDetail)
+            actions.initReq(matchInfo.matchId)
         }
     }
 
@@ -75,7 +75,6 @@ class MatchDetail extends React.Component {
     _title() {
         const {matchDetail} = this.props
         const {matchId, radiantTeam, direTeam} = this.props.matchInfo
-        const matchDetail = matchDetail
 
         return (
             <View style={styles.title}>

@@ -22,7 +22,7 @@ import LeagueInfo from './LeagueInfo'
 
 import commonComponent from '../common/commonComponent'
 import Util from '../common/util'
-import leagueListAction from '../actions/leagueList'
+import * as leagueListAction from '../actions/leagueList'
 
 class LeagueList extends Component {
     constructor(props) {
@@ -36,6 +36,11 @@ class LeagueList extends Component {
         if (!init) {
             actions.initReq(type)
         }
+    }
+
+    shouldComponentUpdate() {
+        console.log("shouldComponentUpdate")
+        return true
     }
 
     render() {
@@ -83,12 +88,12 @@ class LeagueList extends Component {
 
     _endReached() {
         const {actions, type} = this.props
-        actions.scrollDownReq(type)
+        actions.fetchScrollDownReq(type)
     }
 
     _onRefresh() {
         const {actions, type} = this.props
-        actions.pullReq(type)
+        actions.fetchPullReq(type)
     }
 }
 
@@ -111,7 +116,7 @@ export default Util.ReduxComponent((state, ownProps) => {
     const typeLeagues = state.leagueList[ownProps.type]
     if (!typeLeagues) {
         return {
-            init: true,
+            init: false,
             pullRefreshing: false,
             items: null,
         }

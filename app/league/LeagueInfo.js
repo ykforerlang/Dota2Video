@@ -16,12 +16,12 @@ import {
 
 import commonStyles from '../common/commonStyle'
 import commonComponent from '../common/commonComponent'
-import Util from '../common/Util'
+import Util from '../common/util'
 
 import LeagueBrief from './LeagueBrief'
 import MatchBrief from './MatchBrief'
 
-import matchListActin from '../actions/matchList'
+import * as matchListActin from '../actions/matchList'
 
 class LeagueInfo extends React.Component {
     constructor(props) {
@@ -34,7 +34,7 @@ class LeagueInfo extends React.Component {
     componentDidMount() {
         const {actions, league, init} = this.props
         if (!init) {
-            actions.initReq(league.leagueId)
+            actions.initReq(league.leagueid)
         }
     }
 
@@ -87,12 +87,12 @@ class LeagueInfo extends React.Component {
     _onRefresh() {
         const {actions, league, init} = this.props
         if(!init) return
-        actions.fetchPullReq(league.leagueId)
+        actions.fetchPullReq(league.leagueid)
     }
     _endReached(){
         const {actions, league, init} = this.props
         if(!init) return
-        actions.scrollDownReq(league.leagueId)
+        actions.fetchScrollDownReq(league.leagueid)
     }
 }
 
@@ -128,7 +128,8 @@ const styles = StyleSheet.create({
 })
 
 export default Util.ReduxComponent((state, ownProps) => {
-    const leagueMatchList = state.matchList[ownProps.league.leagueId + ""]
+    console.log('ownProps', ownProps)
+    const leagueMatchList = state.matchList[ownProps.league.leagueid + ""]
     if (!leagueMatchList) {
         return {
             init:false,

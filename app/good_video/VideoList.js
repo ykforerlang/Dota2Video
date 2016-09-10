@@ -17,8 +17,8 @@ import Orientation from 'react-native-orientation'
 import Video from './Video'
 
 import commonComponent from '../common/commonComponent'
-import Util from '../common/Util'
-import goodVideoAction from '../actions/goodVideo'
+import Util from '../common/util'
+import * as goodVideoAction from '../actions/goodVideo'
 
 const {width} = Dimensions.get('window');
 class VideoList extends React.Component {
@@ -108,12 +108,12 @@ class VideoList extends React.Component {
 
     _onRefresh() {
         const {actions} = this.props
-        actions.pullReq()
+        actions.fetchPullReq()
     }
 
     _endReached() {
         const {actions} = this.props
-        actions.scrollDownReq()
+        actions.fetchScrollDownReq()
     }
 
     static resizeEle(ele) {
