@@ -16,6 +16,7 @@ import {
 import Orientation from 'react-native-orientation'
 import Video from './Video'
 
+import SGListView from 'react-native-sglistview'
 import commonComponent from '../common/commonComponent'
 import Util from '../common/util'
 import * as goodVideoAction from '../actions/goodVideo'
@@ -52,10 +53,10 @@ class VideoList extends React.Component {
             return commonComponent.loadData()
         }
         return (
-            <ListView
+            <SGListView
                 style={{marginTop:30,}}
                 contentContainerStyle={styles.content}
-                initialListSize={30}
+                initialListSize={10}
                 dataSource={this._ds.cloneWithRowsAndSections(items)}
                 renderRow={this._renderRow.bind(this)}
                 renderSectionHeader={(sectionData, sectionID) => this._renderHeader(sectionData, sectionID)}
@@ -72,6 +73,7 @@ class VideoList extends React.Component {
                         onRefresh={this._onRefresh.bind(this)}
                     />
                 }
+                premptiveLoading={4}
             />
         )
     }

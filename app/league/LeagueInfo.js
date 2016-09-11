@@ -18,6 +18,7 @@ import commonStyles from '../common/commonStyle'
 import commonComponent from '../common/commonComponent'
 import Util from '../common/util'
 
+import SGListView from 'react-native-sglistview'
 import LeagueBrief from './LeagueBrief'
 import MatchBrief from './MatchBrief'
 
@@ -43,7 +44,7 @@ class LeagueInfo extends React.Component {
         const dsItems = init ? items : {"__s1":["__init"]}
 
         return (
-            <ListView
+            <SGListView
                 initialListSize={10}
                 dataSource={this._ds.cloneWithRowsAndSections(dsItems)}
                 renderRow={(sub) => this._renderRow(sub)}
@@ -53,13 +54,13 @@ class LeagueInfo extends React.Component {
                 renderHeader ={this._header.bind(this)}
                 onEndReached={this._endReached.bind(this)}
                 onEndReachedThreshold={300}
-                scrollRenderAheadDistance={600}
                 refreshControl = {
                     <RefreshControl
                         refreshing={pullRefreshing}
                         onRefresh={this._onRefresh.bind(this)}
                     />
                 }
+                premptiveLoading={2}
             />
         )
     }

@@ -20,6 +20,7 @@ import Orientation from 'react-native-orientation'
 import LeagueBrief from './LeagueBrief'
 import LeagueInfo from './LeagueInfo'
 
+import SGListView from 'react-native-sglistview'
 import commonComponent from '../common/commonComponent'
 import Util from '../common/util'
 import * as leagueListAction from '../actions/leagueList'
@@ -51,7 +52,7 @@ class LeagueList extends Component {
         }
 
         return (
-            <ListView
+            <SGListView
                 contentContainerStyle={styles.content}
                 initialListSize={10}
                 dataSource={this._ds.cloneWithRows(items)}
@@ -67,13 +68,13 @@ class LeagueList extends Component {
                 removeClippedSubviews={true}
                 onEndReached={this._endReached.bind(this)}
                 onEndReachedThreshold={300}
-                scrollRenderAheadDistance={500}
                 refreshControl={
                     <RefreshControl
                         refreshing={pullRefreshing}
                         onRefresh={this._onRefresh.bind(this)}
                     />
                 }
+                premptiveLoading={4}
             />
         )
     }
