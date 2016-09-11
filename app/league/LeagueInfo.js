@@ -18,7 +18,6 @@ import commonStyles from '../common/commonStyle'
 import commonComponent from '../common/commonComponent'
 import Util from '../common/util'
 
-import SGListView from 'react-native-sglistview'
 import LeagueBrief from './LeagueBrief'
 import MatchBrief from './MatchBrief'
 
@@ -44,7 +43,7 @@ class LeagueInfo extends React.Component {
         const dsItems = init ? items : {"__s1":["__init"]}
 
         return (
-            <SGListView
+            <ListView
                 initialListSize={10}
                 dataSource={this._ds.cloneWithRowsAndSections(dsItems)}
                 renderRow={(sub) => this._renderRow(sub)}
@@ -60,7 +59,6 @@ class LeagueInfo extends React.Component {
                         onRefresh={this._onRefresh.bind(this)}
                     />
                 }
-                premptiveLoading={2}
             />
         )
     }

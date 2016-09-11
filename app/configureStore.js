@@ -17,7 +17,7 @@ const createStoreWithMiddleware = applyMiddleware(
 
 export default function configureStore(initialState) {
     const store  = createStoreWithMiddleware(rootReducer, initialState, autoRehydrate())
-    //persistStore(store, {storage: AsyncStorage}).purge()   if data get out of wack
+    //persistStore(store, {storage: AsyncStorage}).purge()  // if data get out of wack
     persistStore(store, {storage: AsyncStorage})
     //const store  = createStoreWithMiddleware(rootReducer, initialState)
     return store

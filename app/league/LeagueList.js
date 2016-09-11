@@ -20,7 +20,6 @@ import Orientation from 'react-native-orientation'
 import LeagueBrief from './LeagueBrief'
 import LeagueInfo from './LeagueInfo'
 
-import SGListView from 'react-native-sglistview'
 import commonComponent from '../common/commonComponent'
 import Util from '../common/util'
 import * as leagueListAction from '../actions/leagueList'
@@ -52,7 +51,7 @@ class LeagueList extends Component {
         }
 
         return (
-            <SGListView
+            <ListView
                 contentContainerStyle={styles.content}
                 initialListSize={10}
                 dataSource={this._ds.cloneWithRows(items)}
@@ -74,7 +73,6 @@ class LeagueList extends Component {
                         onRefresh={this._onRefresh.bind(this)}
                     />
                 }
-                premptiveLoading={4}
             />
         )
     }
