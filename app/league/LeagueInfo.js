@@ -12,6 +12,7 @@ import {
     RefreshControl,
     Image,
     Dimensions,
+    InteractionManager,
 } from 'react-native';
 
 import commonStyles from '../common/commonStyle'
@@ -29,18 +30,31 @@ class LeagueInfo extends React.Component {
         this._ds = new ListView.DataSource({rowHasChanged: ((r1, r2) => r1 !== r2),
             sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
+
+        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
+
+        this.state = {
+            renderHoldPlace: true
+        }
     }
 
     componentDidMount() {
         const {actions, league, init} = this.props
-        if (!init) {
-            actions.initReq(league.leagueid)
-        }
+        InteractionManager.runAfterInteractions(() => {
+            if (!init) {
+                this.state.renderHoldPlace = false
+                actions.initReq(league.leagueid)
+            } else {
+                this.setState({
+                    renderHoldPlace: false
+                })
+            }
+        });
     }
 
     render() {
         const {init, pullRefreshing, items} = this.props
-        const dsItems = init ? items : {"__s1":["__init"]}
+        const dsItems = init && !this.state.renderHoldPlace ? items : {"__s1":["__init"]}
 
         return (
             <ListView

@@ -21,6 +21,11 @@ import commonStyles from '../common/commonStyle'
 import dotaBaseData from '../common/dotaBaseData'
 
 export default class MatchBrief extends Component {
+    constructor(props) {
+        super(props)
+
+        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
 
     render() {
         const {matchId, startTime, type, radiantTeam, direTeam, heroes} = this.props.matchInfo

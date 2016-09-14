@@ -35,6 +35,8 @@ class VideoList extends React.Component {
         </View>
 
         this.navigator = props.navigator
+
+        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
     componentDidMount() {

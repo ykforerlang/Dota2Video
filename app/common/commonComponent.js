@@ -12,14 +12,16 @@ import {
     Dimensions,
 } from 'react-native';
 
+import StaticContainer from 'react-static-container'
+
 export default class CommonComponent {
 
     static loadData(style, size) {
-        return (<ActivityIndicator
+        return (<StaticContainer><ActivityIndicator
             animating={true}
             style={[styles.loadData, style]}
             size={size || 'large'}
-        />)
+        /></StaticContainer>)
     }
 
 }

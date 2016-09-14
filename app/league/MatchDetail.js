@@ -15,6 +15,7 @@ import {
     RefreshControl,
     Image,
     Dimensions,
+    InteractionManager,
 } from 'react-native';
 
 import commonStyles from '../common/commonStyle'
@@ -33,19 +34,34 @@ class MatchDetail extends React.Component {
         super(props)
 
         this.navigator = props.navigator
+        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
+
+
+        this.state = {
+            renderHoldPlace: true
+        }
     }
 
     componentDidMount() {
         const {actions, matchInfo, matchDetail} = this.props
-        if (!matchDetail) {
-            actions.initReq(matchInfo.matchId)
-        }
+
+
+        InteractionManager.runAfterInteractions(() => {
+            if (!matchDetail) {
+                this.state.renderHoldPlace = false
+                actions.initReq(matchInfo.matchId)
+            } else {
+                this.setState({
+                    renderHoldPlace: false
+                })
+            }
+        });
     }
 
     render() {
         const {matchDetail} = this.props
         let playerDetail = null
-        if (!matchDetail) {
+        if (!matchDetail || this.state.renderHoldPlace) {
             playerDetail = commonComponent.loadData(styles.loadData, 'small')
         } else {
             console.log("....before players")

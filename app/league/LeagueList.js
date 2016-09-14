@@ -13,6 +13,7 @@ import {
     Image,
     Dimensions,
     Navigator,
+    InteractionManager,
 } from 'react-native';
 
 import Orientation from 'react-native-orientation'
@@ -28,25 +29,34 @@ class LeagueList extends Component {
     constructor(props) {
         super(props)
         this._ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
+
+        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
+        this.state = {
+            renderHoldPlace: true
+        }
     }
 
     componentDidMount() {
         Orientation.lockToPortrait()
         const {actions, type, init} = this.props
-        if (!init) {
-            actions.initReq(type)
-        }
+
+        InteractionManager.runAfterInteractions(() => {
+            if (!init) {
+                this.state.renderHoldPlace = false
+                actions.initReq(type)
+            } else {
+                this.setState({
+                    renderHoldPlace: false
+                })
+            }
+        })
     }
 
-    shouldComponentUpdate() {
-        console.log("shouldComponentUpdate")
-        return true
-    }
 
     render() {
         const {init, pullRefreshing, items} = this.props
 
-        if (!init) {
+        if (!init || this.state.renderHoldPlace) {
             return commonComponent.loadData()
         }
 

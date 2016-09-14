@@ -13,6 +13,7 @@
     "react-native-sglistview": "^0.3.2",
     "react-native-vector-icons": "^2.0.3",
     "react-redux": "^4.4.5",
+    "react-static-container": "^1.0.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.6.1",
     "redux-persist": "^3.5.0",
