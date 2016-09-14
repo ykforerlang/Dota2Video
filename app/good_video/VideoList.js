@@ -11,6 +11,7 @@ import {
     Dimensions,
     RefreshControl,
     TouchableHighlight,
+    InteractionManager,
 } from 'react-native';
 
 import Orientation from 'react-native-orientation'
@@ -37,20 +38,31 @@ class VideoList extends React.Component {
         this.navigator = props.navigator
 
         this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
+
+        this.state = {
+            renderHoldPlace: true
+        }
     }
 
     componentDidMount() {
         const {actions, init} = this.props
-        if (!init) {
-            actions.initReq()
-        }
+        InteractionManager.runAfterInteractions(() => {
+            if (!init) {
+                this.state.renderHoldPlace = false
+                actions.initReq()
+            } else {
+                this.setState({
+                    renderHoldPlace: false
+                })
+            }
+        })
     }
 
 
     render() {
         const {init, pullRefreshing, items} = this.props
 
-        if (!init) {
+        if (!init || this.state.renderHoldPlace) {
             return commonComponent.loadData()
         }
         return (
