@@ -29,34 +29,22 @@ class LeagueList extends Component {
     constructor(props) {
         super(props)
         this._ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1.leagueid !== r2.leagueid})
-
-        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
-        this.state = {
-            renderHoldPlace: true
-        }
     }
 
     componentDidMount() {
         Orientation.lockToPortrait()
         const {actions, type, init} = this.props
 
-        InteractionManager.runAfterInteractions(() => {
-            if (!init) {
-                this.state.renderHoldPlace = false
-                actions.initReq(type)
-            } else {
-                this.setState({
-                    renderHoldPlace: false
-                })
-            }
-        })
+        if (!init) {
+            actions.initReq(type)
+        }
     }
 
 
     render() {
         const {init, pullRefreshing, items} = this.props
 
-        if (!init || this.state.renderHoldPlace) {
+        if (!init) {
             return commonComponent.loadData()
         }
 
@@ -92,7 +80,8 @@ class LeagueList extends Component {
             league: league,
             component: LeagueInfo,
             naviTitle: league.name,
-            naviBack: '赛事'})
+            naviBack: '赛事'
+        })
     }
 
     _endReached() {

@@ -37,32 +37,20 @@ class VideoList extends React.Component {
 
         this.navigator = props.navigator
 
-        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
-
-        this.state = {
-            renderHoldPlace: true
-        }
     }
 
     componentDidMount() {
         const {actions, init} = this.props
-        InteractionManager.runAfterInteractions(() => {
-            if (!init) {
-                this.state.renderHoldPlace = false
-                actions.initReq()
-            } else {
-                this.setState({
-                    renderHoldPlace: false
-                })
-            }
-        })
+        if (!init) {
+            actions.initReq()
+        }
     }
 
 
     render() {
         const {init, pullRefreshing, items} = this.props
 
-        if (!init || this.state.renderHoldPlace) {
+        if (!init ) {
             return commonComponent.loadData()
         }
         return (
@@ -187,7 +175,7 @@ const styles = StyleSheet.create({
 
 })
 
-export default Util.ReduxComponent(state =>  {
+export default Util.ReduxComponent(state => {
     const goodVideo = state.goodVideo
     if (!goodVideo) {
         return {
@@ -198,8 +186,8 @@ export default Util.ReduxComponent(state =>  {
     } else {
         return {
             init: true,
-            pullRefreshing:goodVideo.pullRefreshing,
-            items:VideoList.resizeEle(goodVideo.items),
+            pullRefreshing: goodVideo.pullRefreshing,
+            items: VideoList.resizeEle(goodVideo.items),
         }
     }
 }, goodVideoAction, VideoList)

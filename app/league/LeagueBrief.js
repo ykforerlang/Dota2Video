@@ -23,8 +23,6 @@ export default class LeagueBrief extends React.Component {
     constructor(props) {
         super(props)
         this.navigator = props.navigator
-
-        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
     setNativeProps(nativeProps) {

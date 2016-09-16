@@ -31,8 +31,6 @@ class LeagueInfo extends React.Component {
             sectionHeaderHasChanged: ((s1, s2) => s1 !== s2),
         })
 
-        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
-
         this.state = {
             renderHoldPlace: true
         }
@@ -45,6 +43,7 @@ class LeagueInfo extends React.Component {
                 this.state.renderHoldPlace = false
                 actions.initReq(league.leagueid)
             } else {
+                console.log("interaction.....")
                 this.setState({
                     renderHoldPlace: false
                 })

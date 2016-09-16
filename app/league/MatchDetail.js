@@ -34,7 +34,6 @@ class MatchDetail extends React.Component {
         super(props)
 
         this.navigator = props.navigator
-        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
 
 
         this.state = {

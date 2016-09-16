@@ -24,7 +24,6 @@ export default class MatchBrief extends Component {
     constructor(props) {
         super(props)
 
-        this.shouldComponentUpdate = React.addons.PureRenderMixin.shouldComponentUpdate.bind(this);
     }
 
     render() {
